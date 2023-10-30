@@ -1,6 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+  Image,
+} from "react-native";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import { NavigationContainer } from "@react-navigation/native";
@@ -15,13 +22,15 @@ import {
   DMSans_700Bold,
 } from "@expo-google-fonts/dm-sans";
 
-function AttendanceScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.screenText}>Attendance Screen</Text>
-    </View>
-  );
-}
+import AttendanceScreen from "./screens/Attendance/Attendance";
+
+// function AttendanceScreen() {
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.screenText}>Attendance Screen</Text>
+//     </View>
+//   );
+// }
 
 function EntriesScreen() {
   return (
@@ -105,7 +114,15 @@ export default function App() {
 
   return (
     <GluestackUIProvider config={config}>
-      <NavigationContainer>
+      <View style={styles.header}>
+        <Image
+          source={require("./assets/logo.png")}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+        <Text style={styles.appName}>Ayush HMS</Text>
+      </View>
+      <NavigationContainer style={styles.container}>
         <Tab.Navigator
           tabBar={(props) => <CustomTabBar {...props} />}
           tabBarOptions={{
@@ -145,6 +162,24 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 170,
+    backgroundColor: "#2E475D",
+    paddingHorizontal: 20,
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    marginRight: 10,
+  },
+  appName: {
+    fontSize: 36,
+    fontFamily: "DM-Sans-Bold",
+    color: "#FFF",
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
