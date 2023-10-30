@@ -23,27 +23,12 @@ import {
 } from "@expo-google-fonts/dm-sans";
 
 import AttendanceScreen from "./screens/Attendance/Attendance";
-
-// function AttendanceScreen() {
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.screenText}>Attendance Screen</Text>
-//     </View>
-//   );
-// }
+import DispensariesScreen from "./screens/Dispensaries/Dispensaries";
 
 function EntriesScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.screenText}>Entries Screen</Text>
-    </View>
-  );
-}
-
-function DispensariesScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.screenText}>Dispensaries Screen</Text>
     </View>
   );
 }
@@ -193,7 +178,7 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: "row",
-    height: 110, // Adjust the height of the tab bar
+    height: 150, // Adjust the height of the tab bar
     backgroundColor: "#ECF0F9",
   },
   tabItem: {
