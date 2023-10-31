@@ -7,12 +7,19 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
+  useState,
+  useEffect,
 } from "react-native";
-import { GluestackUIProvider } from "@gluestack-ui/themed";
-import { config } from "@gluestack-ui/config";
+import { AsyncStorage } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import { GluestackUIProvider } from "@gluestack-ui/themed";
+import { config } from "@gluestack-ui/config";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
+
+import LoginScreen from "./screens/Auth/LoginScreen";
 
 import {
   useFonts,
@@ -33,6 +40,7 @@ function EntriesScreen() {
   );
 }
 
+const AuthStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function CustomTabBar({ state, descriptors, navigation }) {
@@ -88,6 +96,8 @@ function CustomTabBar({ state, descriptors, navigation }) {
 }
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [userToken, setUserToken] = useState(null);
   const [fontsLoaded] = useFonts({
     "DM-Sans-Regular": DMSans_400Regular,
     "DM-Sans-Bold": DMSans_700Bold,
@@ -95,6 +105,25 @@ export default function App() {
 
   if (!fontsLoaded) {
     return null;
+  }
+
+  const restoreToken = async () => {
+    let token;
+    try {
+      token = await AsyncStorage.getItem("userToken");
+    } catch (e) {
+      console.error(e);
+    }
+    setIsLoading(false);
+    setUserToken(token);
+  };
+
+  useEffect(() => {
+    restoreToken();
+  }, []);
+
+  if (isLoading) {
+    return null; // You can return a loading screen here if you have one
   }
 
   return (
@@ -108,38 +137,45 @@ export default function App() {
         <Text style={styles.appName}>Ayush HMS</Text>
       </View>
       <NavigationContainer style={styles.container}>
-        <Tab.Navigator
-          tabBar={(props) => <CustomTabBar {...props} />}
-          tabBarOptions={{
-            activeTintColor: "#2E475D",
-            inactiveTintColor: "#ABB5BE",
-          }}
-        >
-          <Tab.Screen
-            name="Attendance"
-            component={AttendanceScreen}
-            options={{
-              iconName: "badge-account-horizontal",
-              headerShown: false,
+        {userToken == null ? (
+          <AuthStack.Navigator>
+            <AuthStack.Screen name="Login" component={LoginScreen} />
+            {/* <AuthStack.Screen name="Signup" component={SignupScreen} /> */}
+          </AuthStack.Navigator>
+        ) : (
+          <Tab.Navigator
+            tabBar={(props) => <CustomTabBar {...props} />}
+            tabBarOptions={{
+              activeTintColor: "#2E475D",
+              inactiveTintColor: "#ABB5BE",
             }}
-          />
-          <Tab.Screen
-            name="Entries"
-            component={EntriesScreen}
-            options={{
-              iconName: "doctor",
-              headerShown: false,
-            }}
-          />
-          <Tab.Screen
-            name="Dispensaries"
-            component={DispensariesScreen}
-            options={{
-              iconName: "hospital-building",
-              headerShown: false,
-            }}
-          />
-        </Tab.Navigator>
+          >
+            <Tab.Screen
+              name="Attendance"
+              component={AttendanceScreen}
+              options={{
+                iconName: "badge-account-horizontal",
+                headerShown: false,
+              }}
+            />
+            <Tab.Screen
+              name="Entries"
+              component={EntriesScreen}
+              options={{
+                iconName: "doctor",
+                headerShown: false,
+              }}
+            />
+            <Tab.Screen
+              name="Dispensaries"
+              component={DispensariesScreen}
+              options={{
+                iconName: "hospital-building",
+                headerShown: false,
+              }}
+            />
+          </Tab.Navigator>
+        )}
         <StatusBar style="auto" />
       </NavigationContainer>
     </GluestackUIProvider>
