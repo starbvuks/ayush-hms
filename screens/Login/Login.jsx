@@ -26,7 +26,7 @@ export default function App() {
       {/* Ayush HMS screen */}
       <View styles={styles.hmsContainer}>
         <ImageBackground
-          source={require("../assets/Login-Image.png")}
+          source={require("./assets/login.png")}
           style={styles.imageBackground}
           resizeMode="cover"
         >
