@@ -19,7 +19,7 @@ import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 
-import LoginScreen from "./screens/Auth/LoginScreen";
+import LoginScreen from ".screens\Auth\Adminlogin.jsx";
 
 import {
   useFonts,
