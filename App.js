@@ -24,7 +24,6 @@ import {
 
 import AttendanceScreen from "./screens/Attendance/Attendance";
 import DispensariesScreen from "./screens/Dispensaries/Dispensaries";
-import LoginScreen from "./screens/Login/Login";
 
 function EntriesScreen() {
   return (
