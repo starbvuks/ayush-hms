@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   Image,
   useEffect,
-} rfrom "react-native";
+} from "react-native";
 import React, { useState } from 'react';
 import { AsyncStorage } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
