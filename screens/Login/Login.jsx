@@ -25,35 +25,39 @@ export default function LoginScreen({ navigation }) {
     return <View />;
   }
 
+  const handleSignIn = () => {
+    navigation.navigate("Main");
+  };
+
   return (
-    <View styles={styles.contanpiner}>
+    <View style={styles.container}>
       {/* Ayush HMS screen */}
-      <View styles={styles.hmsContainer}>
-        <ImageBackground
-          source={require("./assets/login.png")}
+      <View style={styles.hmsContainer}>
+        {/* <ImageBackground
+          source={require("../../assets/login.png")}
           style={styles.imageBackground}
           resizeMode="cover"
-        >
-          <Text style={styles.hmsTitle}>Ayush HMS</Text>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Dispensary ID</Text>
-            <TextInput style={styles.input} placeholder="example-id" />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Password</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="••••••••••"
-              secureTextEntry={true}
-            />
-          </View>
-          <TouchableOpacity style={styles.signInButton}>
-            <Text style={styles.buttonText}>SIGN IN</Text>
-          </TouchableOpacity>
-          <Text style={styles.footerText}>
-            Are you an admin? <Text style={styles.linkText}>Login Here</Text>
-          </Text>
-        </ImageBackground>
+        > */}
+        <Text style={styles.hmsTitle}>Ayush HMS</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>Dispensary ID</Text>
+          <TextInput style={styles.input} placeholder="example-id" />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>Password</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="••••••••••"
+            secureTextEntry={true}
+          />
+        </View>
+        <TouchableOpacity style={styles.signInButton} onPress={handleSignIn}>
+          <Text style={styles.buttonText}>SIGN IN</Text>
+        </TouchableOpacity>
+        <Text style={styles.footerText}>
+          Are you an admin? <Text style={styles.linkText}>Login Here</Text>
+        </Text>
+        {/* </ImageBackground> */}
       </View>
     </View>
   );
@@ -63,6 +67,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
+    marginTop: 80,
   },
   hmsContainer: {
     flex: 1,
