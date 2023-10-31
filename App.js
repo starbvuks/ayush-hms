@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
-  useState,
   useEffect,
-} from "react-native";
+} rfrom "react-native";
+import React, { useState } from 'react';
 import { AsyncStorage } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
