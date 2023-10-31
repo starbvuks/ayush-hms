@@ -9,7 +9,7 @@ import {
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import { useFonts, DMSans_400Regular, DMSans_700Bold } from "@expo-google-fonts/dm-sans";
 
-export default function AdminLogin() {
+export default function AdminLogin({navigation}) {
   let [fontsLoaded] = useFonts({
     DMSans_400Regular,
     DMSans_700Bold,
