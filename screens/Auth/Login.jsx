@@ -26,7 +26,7 @@ export default function LoginScreen({navigation}) {
       {/* Ayush HMS screen */}
       <View styles={styles.hmsContainer}>
         <ImageBackground
-          source={require("./assets/login.png")}
+          source={require("c:/Users/bnand/Desktop/ayush-hms/assets/login.png")}
           style={styles.imageBackground}
           resizeMode="cover"
         >
