@@ -20,7 +20,12 @@ export default function DispensariesScreen({ navigation }) {
   ];
 
   const renderOption = ({ item }) => (
-    <TouchableOpacity style={styles.optionContainer}>
+    <TouchableOpacity
+      style={styles.optionContainer}
+      onPress={() => {
+        navigation.navigate(item.label);
+      }}
+    >
       <MaterialCommunityIcons name={item.icon} color="#2E475D" size={80} />
       <Text style={styles.optionText}>{item.label}</Text>
     </TouchableOpacity>
