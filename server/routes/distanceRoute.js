@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { calculateDistance } = require("../utils/functions");
+const { getDistance } = require("geolib");
 
 router.get("/distance", (req, res) => {
   const { lat1, lon1, lat2, lon2 } = req.query;
@@ -11,11 +12,14 @@ router.get("/distance", (req, res) => {
   const lat2Num = parseFloat(lat2);
   const lon2Num = parseFloat(lon2);
 
-  // Calculate the distance using the Haversine formula
-  const distance = calculateDistance(lat1Num, lon1Num, lat2Num, lon2Num);
+  // Calculate the distance using the Vincenty formula
+  const distance = getDistance(
+    { latitude: lat1Num, longitude: lon1Num },
+    { latitude: lat2Num, longitude: lon2Num }
+  );
 
-  // Format the distance to meters without decimal points
-  const formattedDistance = Math.round(distance);
+  // Format the distance to meters with 2 decimal points
+  const formattedDistance = (distance / 1000).toFixed(2);
 
   // Return the formatted distance with the unit
   res.json({ distance: `${formattedDistance} meters` });
