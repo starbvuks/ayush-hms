@@ -6,18 +6,11 @@ import { MaterialCommunityIcons } from "react-native-vector-icons";
 
 import LoginScreen from "../screens/Login/Login";
 import AttendanceScreen from "../screens/Attendance/Attendance";
+import EntriesScreen from "../screens/Entries/Entries";
 import DispensariesScreen from "../screens/Dispensaries/Dispensaries";
 
 import RegisteredDispensaryDetails from "../screens/Dispensaries/RegisteredDispensaryDetails";
-// import EntriesScreen from "../screens/Entries/EntriesScreen";
-
-function EntriesScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.screenText}>Entries Screen</Text>
-    </View>
-  );
-}
+import PatientEntryScreen from "../screens/Entries/EnterPatientData";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -92,6 +85,11 @@ function AppNavigator() {
       <Stack.Screen
         name="Registered Dispensary Details"
         component={RegisteredDispensaryDetails}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Enter Patient Data"
+        component={PatientEntryScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
