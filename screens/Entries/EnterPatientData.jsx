@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,10 @@ import {
   Dimensions,
 } from "react-native";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
+import * as Location from "expo-location";
 import DropDownPicker from "react-native-dropdown-picker";
+
+import GenderPicker from "../../components/GenderPicker";
 
 export default function PatientEntryScreen() {
   const [patientData, setPatientData] = useState({
@@ -23,39 +26,42 @@ export default function PatientEntryScreen() {
     treatment: "",
     other_info: "",
   });
+  const [location, setLocation] = useState(null);
 
   const handleInputChange = (name, value) => {
     setPatientData({ ...patientData, [name]: value });
   };
 
+  useEffect(() => {
+    (async () => {
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          console.log("Location permission not granted");
+          return;
+        }
+
+        let currentLocation = await Location.getCurrentPositionAsync({});
+        setLocation(currentLocation.coords);
+        console.log(currentLocation.coords);
+      } catch (error) {
+        console.log("Error while fetching location:", error);
+      }
+    })();
+  }, []);
+
   const handleSubmit = () => {
-    // fetch("http://localhost:3000/patient-data", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     ...patientData,
-    //     employeeId: 2,
-    //   }),
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     console.log("Success:", data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
+    if (!location) {
+      console.log("Unable to retrieve location");
+      return;
+    }
 
     const formData = {
       patientData: patientData,
       employeeId: 2,
       location: {
-        longitude: 123.456, // replace with actual longitude
-        latitude: 78.901, // replace with actual latitude
+        longitude: location.longitude,
+        latitude: location.latitude,
       },
     };
 
@@ -83,21 +89,10 @@ export default function PatientEntryScreen() {
               <Text style={styles.inputLabel}>{key.replace("_", " ")}</Text>
               <View key={key} style={styles.smallInputContainer}>
                 {key === "gender" ? (
-                  <DropDownPicker
-                    items={[
-                      { label: "Male", value: "Male" },
-                      { label: "Female", value: "Female" },
-                      { label: "Other", value: "Other" },
-                    ]}
-                    value={patientData.gender}
-                    containerStyle={{ height: 40 }}
-                    style={{ backgroundColor: "#fafafa" }}
-                    itemStyle={{
-                      justifyContent: "flex-start",
-                    }}
-                    dropDownStyle={{ backgroundColor: "#fafafa" }}
-                    onChangeItem={(item) =>
-                      handleInputChange("gender", item.value)
+                  <GenderPicker
+                    selectedGender={patientData.gender}
+                    onGenderChange={(gender) =>
+                      handleInputChange("gender", gender)
                     }
                   />
                 ) : (
