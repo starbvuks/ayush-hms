@@ -8,9 +8,11 @@ import LoginScreen from "../screens/Login/Login";
 import AttendanceScreen from "../screens/Attendance/Attendance";
 import EntriesScreen from "../screens/Entries/Entries";
 import DispensariesScreen from "../screens/Dispensaries/Dispensaries";
+import AdminLogin from "../screens/Login/Adminlogin";
 
 import RegisteredDispensaryDetails from "../screens/Dispensaries/RegisteredDispensaryDetails";
 import PatientEntryScreen from "../screens/Entries/EnterPatientData";
+import DispensaryDashboard from "../screens/AdminDashboard/DispensaryDashboard";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -90,6 +92,16 @@ function AppNavigator() {
       <Stack.Screen
         name="Enter Patient Data"
         component={PatientEntryScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Admin Login"
+        component={AdminLogin}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Dispensary Dashboard"
+        component={DispensaryDashboard}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

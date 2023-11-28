@@ -9,6 +9,9 @@ app.use(express.json());
 const patientDataRoute = require("./routes/patientEntryRoute");
 app.use("/patient-data", patientDataRoute);
 
+const distanceRoute = require("./routes/distanceRoute");
+app.use("/", distanceRoute);
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });

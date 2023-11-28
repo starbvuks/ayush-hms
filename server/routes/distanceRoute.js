@@ -27,4 +27,4 @@ router.get("/distance", (req, res) => {
 
 module.exports = router;
 
-// http://localhost:3000/api/distance?lat1=17.385044&lon1=78.486671&lat2=17.385074&lon2=78.486671
+// http://localhost:3000/distance?lat1=17.585044&lon1=78.986671&lat2=17.385074&lon2=78.486671

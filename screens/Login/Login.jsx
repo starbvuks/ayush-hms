@@ -29,15 +29,14 @@ export default function LoginScreen({ navigation }) {
     navigation.navigate("Main");
   };
 
+  const handleAdminRoute = () => {
+    navigation.navigate("Admin Login");
+  };
+
   return (
     <View style={styles.container}>
       {/* Ayush HMS screen */}
       <View style={styles.hmsContainer}>
-        {/* <ImageBackground
-          source={require("../../assets/login.png")}
-          style={styles.imageBackground}
-          resizeMode="cover"
-        > */}
         <Text style={styles.hmsTitle}>Ayush HMS</Text>
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Dispensary ID</Text>
@@ -56,6 +55,12 @@ export default function LoginScreen({ navigation }) {
         </TouchableOpacity>
         <Text style={styles.footerText}>
           Are you an admin? <Text style={styles.linkText}>Login Here</Text>
+        </Text>
+        <Text style={styles.footerText2}>
+          Need to make a new account?{" "}
+          <TouchableOpacity onPress={handleAdminRoute}>
+            <Text style={styles.linkText}>Register Here</Text>
+          </TouchableOpacity>
         </Text>
         {/* </ImageBackground> */}
       </View>
@@ -122,6 +127,12 @@ const styles = StyleSheet.create({
     fontFamily: "DMSans_400Regular",
     fontSize: 18,
     textAlign: "center",
+  },
+  footerText2: {
+    fontFamily: "DMSans_400Regular",
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 10,
   },
   linkText: {
     fontFamily: "DMSans_400Regular",

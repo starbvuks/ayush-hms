@@ -7,9 +7,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
-import { useFonts, DMSans_400Regular, DMSans_700Bold } from "@expo-google-fonts/dm-sans";
+import {
+  useFonts,
+  DMSans_400Regular,
+  DMSans_700Bold,
+} from "@expo-google-fonts/dm-sans";
 
-export default function AdminLogin({navigation}) {
+export default function AdminLogin({ navigation }) {
   let [fontsLoaded] = useFonts({
     DMSans_400Regular,
     DMSans_700Bold,
@@ -19,28 +23,45 @@ export default function AdminLogin({navigation}) {
     return <View />;
   }
 
+  const handleAdminRoute = () => {
+    navigation.navigate("Dispensary Dashboard");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.adminTitle}>Admin Login</Text>
-      
+
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Account</Text>
         <TextInput style={styles.input} placeholder="xyz" />
       </View>
-      
+
       <View style={styles.passwordContainer}>
         <Text style={styles.inputLabel}>Password</Text>
-        <TextInput style={styles.input} placeholder="••••••••••" secureTextEntry={true} />
-        <MaterialCommunityIcons name="eye-outline" size={24} color="black" style={styles.icon} />
+        <TextInput
+          style={styles.input}
+          placeholder="••••••••••"
+          secureTextEntry={true}
+        />
+        <MaterialCommunityIcons
+          name="eye-outline"
+          size={24}
+          color="black"
+          style={styles.icon}
+        />
       </View>
-      
+
       <View style={styles.checkboxContainer}>
-        <MaterialCommunityIcons name="checkbox-blank-outline" size={24} color="black" />
+        <MaterialCommunityIcons
+          name="checkbox-blank-outline"
+          size={24}
+          color="black"
+        />
         <Text style={styles.rememberText}>Remember me</Text>
         <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </View>
-      
-      <TouchableOpacity style={styles.signInButton}>
+
+      <TouchableOpacity style={styles.signInButton} onPress={handleAdminRoute}>
         <Text style={styles.buttonText}>SIGN IN</Text>
       </TouchableOpacity>
     </View>
@@ -58,7 +79,7 @@ const styles = StyleSheet.create({
     fontFamily: "DMSans_700Bold",
     fontSize: 30 * (2560 / 1600),
     marginBottom: 40 * (2560 / 1600),
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   inputContainer: {
     marginBottom: 20 * (2560 / 1600),
