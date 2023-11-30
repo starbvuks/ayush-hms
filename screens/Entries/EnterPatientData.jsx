@@ -8,9 +8,7 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { MaterialCommunityIcons } from "react-native-vector-icons";
 import * as Location from "expo-location";
-import DropDownPicker from "react-native-dropdown-picker";
 
 import GenderPicker from "../../components/GenderPicker";
 
@@ -21,15 +19,24 @@ export default function PatientEntryScreen() {
     age: "",
     gender: "",
     adhaar_number: "",
-    marital_status: "",
     diagnosis: "",
     treatment: "",
     other_info: "",
   });
   const [location, setLocation] = useState(null);
+  const [adhaarNumber, setAdhaarNumber] = useState("");
 
-  const handleInputChange = (name, value) => {
-    setPatientData({ ...patientData, [name]: value });
+  const formatAdhaarNumber = (value) => {
+    let formattedText = value.replace(/\D/g, ""); // Remove all non-digit characters
+    if (formattedText.length > 0) {
+      formattedText = formattedText.match(new RegExp(".{1,4}", "g")).join(" "); // Insert a space after every 4 digits
+    }
+    return formattedText;
+  };
+
+  const handleAdhaarNumberChange = (value) => {
+    setAdhaarNumber(formatAdhaarNumber(value));
+    handleInputChange("adhaar_number", value.replace(/\s/g, "")); // Remove spaces before storing the value
   };
 
   useEffect(() => {
@@ -49,6 +56,10 @@ export default function PatientEntryScreen() {
       }
     })();
   }, []);
+
+  const handleInputChange = (name, value) => {
+    setPatientData({ ...patientData, [name]: value });
+  };
 
   const handleSubmit = () => {
     if (!location) {
@@ -96,9 +107,11 @@ export default function PatientEntryScreen() {
                     }
                   />
                 ) : (
+                  // age form
                   <TextInput
                     style={styles.smallInput}
-                    placeholder={key.replace("_", " ")}
+                    placeholder=""
+                    keyboardType="numeric"
                     onChangeText={(value) => handleInputChange(key, value)}
                   />
                 )}
@@ -114,6 +127,22 @@ export default function PatientEntryScreen() {
                   style={styles.largeInput}
                   onChangeText={(value) => handleInputChange(key, value)}
                   multiline
+                />
+              </View>
+            </View>
+          );
+        } else if (key === "adhaar_number") {
+          return (
+            <View>
+              <Text style={styles.inputLabel}>{key.replace("_", " ")}</Text>
+              <View key={key} style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder=""
+                  keyboardType="numeric"
+                  onChangeText={handleAdhaarNumberChange}
+                  value={adhaarNumber}
+                  maxLength={14}
                 />
               </View>
             </View>
@@ -147,7 +176,7 @@ const styles = StyleSheet.create({
     paddingVertical: 70,
   },
   header: {
-    fontSize: 32,
+    fontSize: 36,
     marginBottom: 20,
     fontFamily: "DM-Sans-Bold",
   },
@@ -189,10 +218,9 @@ const styles = StyleSheet.create({
     fontFamily: "DM-Sans-Normal",
   },
   smallInput: {
-    width: Dimensions.get("window").width / 5,
     height: 40,
     fontSize: 25,
-    fontFamily: "DM-Sans-Bold",
+    fontFamily: "DM-Sans-Normal",
   },
   largeInput: {
     height: 100,

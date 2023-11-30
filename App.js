@@ -4,13 +4,12 @@ import { StyleSheet, View, Image, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
+import AppLoading from "expo-app-loading";
 
 import AppNavigator from "./navigation/AppNavigator";
 
 import {
   useFonts,
-  DM_Sans_Regular,
-  DM_Sans_Bold,
   DMSans_400Regular,
   DMSans_700Bold,
 } from "@expo-google-fonts/dm-sans";
@@ -22,7 +21,7 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return null;
+    return <AppLoading />;
   }
 
   return (

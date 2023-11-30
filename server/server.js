@@ -2,15 +2,25 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+const patientDataRoute = require("./routes/patientEntryRoute");
+const distanceRoute = require("./routes/distanceRoute");
+const loginRoute = require("./routes/loginRoute");
+
 const db = require("./db/index");
-// parse application/json
 app.use(express.json());
 
-const patientDataRoute = require("./routes/patientEntryRoute");
-app.use("/patient-data", patientDataRoute);
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
-const distanceRoute = require("./routes/distanceRoute");
+app.use("/patient-data", patientDataRoute);
 app.use("/", distanceRoute);
+app.use("/", loginRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

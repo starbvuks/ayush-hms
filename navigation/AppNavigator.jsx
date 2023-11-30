@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 
 import LoginScreen from "../screens/Login/Login";
-import AttendanceScreen from "../screens/Attendance/Attendance";
 import EntriesScreen from "../screens/Entries/Entries";
 import DispensariesScreen from "../screens/Dispensaries/Dispensaries";
 import AdminLogin from "../screens/Login/Adminlogin";
@@ -27,20 +26,6 @@ function MainTabNavigator() {
         labelStyle: styles.tabLabel,
       }}
     >
-      <Tab.Screen
-        name="Attendance"
-        component={AttendanceScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="badge-account-horizontal"
-              color={color}
-              size={size}
-            />
-          ),
-          headerShown: false,
-        }}
-      />
       <Tab.Screen
         name="Entries"
         style={styles.tabItem}
