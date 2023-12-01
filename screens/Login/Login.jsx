@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-// import axios from "axios";
+import axios from "axios";
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -19,57 +18,39 @@ export default function LoginScreen({ navigation }) {
       alert("Please fill all fields");
       return;
     }
-    console.log(username);
-    console.log(password);
+
     try {
-      // Make a POST request to your backend server
-      const response = await fetch("http://localhost:3000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => console.log(data))
-        .catch((error) =>
-          console.error(
-            "There has been a problem with your fetch operation:",
-            error
-          )
-        );
+      console.log("Sending login request...");
+      const response = await axios.post("http://192.168.29.226:3000/login", {
+        username: username,
+        password: password,
+      });
 
-      // Parse the response as JSON
-      const data = await response.json();
+      console.log("Response:", response);
 
-      // If the response contains an error message, show it
+      const data = response.data;
+      console.log("Data:", data);
+
       if (data.error) {
         alert(data.error);
         return;
       }
 
-      // If the response contains a success message and a registered_dispensary,
-      // save the registered_dispensary and employee_id in local storage and navigate to the Main screen
       if (data.message === "Logged in successfully") {
         try {
           await AsyncStorage.multiSet([
-            ["employee_id", data.employee_id],
-            ["registered_dispensary", data.registered_dispensary],
+            ["employee_id", data.employee_id.toString()],
+            ["registered_dispensary", data.registered_dispensary.toString()],
           ]);
+
           const employee_id = await AsyncStorage.getItem("employee_id");
           const registered_dispensary = await AsyncStorage.getItem(
             "registered_dispensary"
           );
+
           console.log("Employee ID:", employee_id);
           console.log("Registered Dispensary:", registered_dispensary);
+
           navigation.navigate("Main");
         } catch (error) {
           console.error(error);
@@ -77,7 +58,23 @@ export default function LoginScreen({ navigation }) {
         }
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error:", error);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.error("Request:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Message:", error.message);
+      }
+      console.error(error.config);
       alert("An error occurred while logging in");
     }
   };

@@ -81,9 +81,10 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid password" });
     }
 
-    // If the credentials are valid, return success and registered_dispensary
+    // If the credentials are valid, return success and employee_id and registered_dispensary
     res.json({
       message: "Logged in successfully",
+      employee_id: user.rows[0].employee_id,
       registered_dispensary: user.rows[0].registered_dispensary,
     });
   } catch (error) {
