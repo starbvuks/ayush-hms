@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,39 +7,47 @@ import {
   ScrollView,
 } from "react-native";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
+import axios from "axios";
 
 export default function AdminDispensaryDashboard({ navigation }) {
+  const [dashboardData, setDashboardData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(
+        "http://192.168.29.226:3000/admin/dashboard"
+      );
+      setDashboardData(response.data);
+    };
+
+    fetchData();
+  }, []);
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.profileImage} />
-        <Text style={styles.title}>Ayush HMS</Text>
-      </View>
-
-      <Text style={styles.dispensaryTitle}>[Dispensary Name]</Text>
-
-      <View style={styles.chartContainer}>
-        <Text style={styles.chartTitle}>Dispensary Patient Entries</Text>
-        <TouchableOpacity style={styles.filterButton}>
-          <Text style={styles.filterText}>Filter</Text>
-        </TouchableOpacity>
-        {/* Placeholder for the chart. In a real application, a charting library such as react-native-svg-charts would be used here. */}
-        <View style={styles.chartPlaceholder} />
-        <Text style={styles.entriesCount}>
-          Total Patient Entries: 1209 Entries
-        </Text>
-        <TouchableOpacity style={styles.filterButtonSmall}>
-          <Text style={styles.filterText}>Filter</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.footerIcons}>
-        <MaterialCommunityIcons
-          name="hospital-building"
-          size={50}
-          color="gray"
-        />
-        <FontAwesome name="user-circle-o" size={50} color="gray" />
+      <View>
+        {dashboardData && (
+          <>
+            <Text>
+              Total number of dispensaries: {dashboardData.totalDispensaries}
+            </Text>
+            <Text>
+              Employees per dispensary:{" "}
+              {JSON.stringify(dashboardData.employeesPerDispensary)}
+            </Text>
+            <Text>
+              Most entries given at a specific day:{" "}
+              {JSON.stringify(dashboardData.mostEntriesDay)}
+            </Text>
+            <Text>
+              Dispensary with the highest number of employees entering data:{" "}
+              {JSON.stringify(dashboardData.mostActiveDispensary)}
+            </Text>
+            <Text>
+              Total entries given by each dispensary:{" "}
+              {JSON.stringify(dashboardData.totalEntries)}
+            </Text>
+          </>
+        )}
       </View>
     </ScrollView>
   );

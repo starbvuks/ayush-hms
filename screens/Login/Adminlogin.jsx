@@ -12,6 +12,7 @@ import axios from "axios";
 export default function AdminLogin({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [userRole, setUserRole] = useState(null);
 
   const handleAdminLogin = async () => {
     if (username === "" || password === "") {
@@ -40,7 +41,12 @@ export default function AdminLogin({ navigation }) {
       }
 
       if (data.message === "Logged in successfully") {
-        navigation.navigate("Admin");
+        if (data.role === "super_admin" || "zone_admin_1" || "zone_admin_2") {
+          setUserRole("admin");
+          navigation.navigate("Admin");
+        } else {
+          alert("You do not have admin privileges");
+        }
       }
     } catch (error) {
       console.error("Error:", error);
