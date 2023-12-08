@@ -7,15 +7,19 @@ import { MaterialCommunityIcons } from "react-native-vector-icons";
 import LoginScreen from "../screens/Login/Login";
 import EntriesScreen from "../screens/Entries/Entries";
 import DispensariesScreen from "../screens/Dispensaries/Dispensaries";
-import AdminLogin from "../screens/Login/Adminlogin";
+import AdminLogin from "../screens/Login/AdminLogin";
 
 import RegisteredDispensaryDetails from "../screens/Dispensaries/RegisteredDispensaryDetails";
 import PatientEntryScreen from "../screens/Entries/EnterPatientData";
-import DispensaryDashboard from "../screens/AdminDashboard/DispensaryDashboard";
+
+import AdminDispensaryDashboard from "../screens/AdminDashboard/AdminDispensaries/DispensaryDashboard";
+import AdminEmployees from "../screens/AdminDashboard/Employees/AdminEmployees";
+import AdminProfile from "../screens/AdminDashboard/Profile/AdminProfile";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+// Bottom Nav for Employee
 function MainTabNavigator() {
   return (
     <Tab.Navigator
@@ -56,6 +60,58 @@ function MainTabNavigator() {
   );
 }
 
+// Bottom Nav for Admin
+function AdminTabNavigator() {
+  return (
+    <Tab.Navigator
+      tabBarOptions={{
+        activeTintColor: "#2E475D",
+        inactiveTintColor: "#ABB5BE",
+        style: styles.tabBar,
+        labelStyle: styles.tabLabel,
+      }}
+    >
+      <Tab.Screen
+        name="Admin Dispensary Dashboard"
+        style={styles.tabItem}
+        component={AdminDispensaryDashboard}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="hospital-building"
+              color={color}
+              size={size}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Admin Employees"
+        style={styles.tabItem}
+        component={AdminEmployees} // replace with your actual Employees screen component
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" color={color} size={size} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Admin Profile"
+        style={styles.tabItem}
+        component={AdminProfile} // replace with your actual Profile screen component
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" color={color} size={size} />
+          ),
+          headerShown: false,
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
 function AppNavigator() {
   return (
     <Stack.Navigator>
@@ -67,6 +123,11 @@ function AppNavigator() {
       <Stack.Screen
         name="Main"
         component={MainTabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Admin"
+        component={AdminTabNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -82,11 +143,6 @@ function AppNavigator() {
       <Stack.Screen
         name="Admin Login"
         component={AdminLogin}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Dispensary Dashboard"
-        component={DispensaryDashboard}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

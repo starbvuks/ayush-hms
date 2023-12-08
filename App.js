@@ -2,8 +2,6 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { GluestackUIProvider } from "@gluestack-ui/themed";
-import { config } from "@gluestack-ui/config";
 import AppLoading from "expo-app-loading";
 
 import AppNavigator from "./navigation/AppNavigator";
@@ -25,7 +23,7 @@ export default function App() {
   }
 
   return (
-    <GluestackUIProvider config={config}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Image
           source={require("./assets/logo.png")}
@@ -38,7 +36,7 @@ export default function App() {
         <AppNavigator />
         <StatusBar style="auto" />
       </NavigationContainer>
-    </GluestackUIProvider>
+    </View>
   );
 }
 
@@ -64,8 +62,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
     fontFamily: "DM-Sans-Regular",
   },
 });

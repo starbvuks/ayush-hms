@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 export default function LoginScreen({ navigation }) {
@@ -38,15 +38,15 @@ export default function LoginScreen({ navigation }) {
 
       if (data.message === "Logged in successfully") {
         try {
-          await AsyncStorage.multiSet([
-            ["employee_id", data.employee_id.toString()],
-            ["registered_dispensary", data.registered_dispensary.toString()],
-          ]);
+          // await AsyncStorage.multiSet([
+          //   ["employee_id", data.employee_id.toString()],
+          //   ["registered_dispensary", data.registered_dispensary.toString()],
+          // ]);
 
-          const employee_id = await AsyncStorage.getItem("employee_id");
-          const registered_dispensary = await AsyncStorage.getItem(
-            "registered_dispensary"
-          );
+          // const employee_id = await AsyncStorage.getItem("employee_id");
+          // const registered_dispensary = await AsyncStorage.getItem(
+          //   "registered_dispensary"
+          // );
 
           console.log("Employee ID:", employee_id);
           console.log("Registered Dispensary:", registered_dispensary);
@@ -79,6 +79,10 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
+  // const handleSignIn2 = () => {
+  //   navigation.navigate("Main");
+  // };
+
   const handleAdminRoute = () => {
     navigation.navigate("Admin Login");
   };
@@ -104,7 +108,10 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.buttonText}>SIGN IN</Text>
         </TouchableOpacity>
         <Text style={styles.footerText}>
-          Are you an admin? <Text style={styles.linkText}>Login Here</Text>
+          Are you an admin?{" "}
+          <TouchableOpacity onPress={handleAdminRoute}>
+            <Text style={styles.linkText}>Login Here</Text>
+          </TouchableOpacity>
         </Text>
         <Text style={styles.footerText2}>
           Need to make a new account?{" "}

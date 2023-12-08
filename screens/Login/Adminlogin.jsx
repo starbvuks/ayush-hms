@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,63 +7,80 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
-import {
-  useFonts,
-  DMSans_400Regular,
-  DMSans_700Bold,
-} from "@expo-google-fonts/dm-sans";
+import axios from "axios";
 
 export default function AdminLogin({ navigation }) {
-  let [fontsLoaded] = useFonts({
-    DMSans_400Regular,
-    DMSans_700Bold,
-  });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  if (!fontsLoaded) {
-    return <View />;
-  }
+  const handleAdminLogin = async () => {
+    if (username === "" || password === "") {
+      alert("Please fill all fields");
+      return;
+    }
+
+    try {
+      console.log("Sending login request...");
+      const response = await axios.post(
+        "http://192.168.29.226:3000/admin/login",
+        {
+          username: username,
+          password: password,
+        }
+      );
+
+      console.log("Response:", response);
+
+      const data = response.data;
+      console.log("Data:", data);
+
+      if (response.status === 401) {
+        alert(data.message);
+        return;
+      }
+
+      if (data.message === "Logged in successfully") {
+        navigation.navigate("Admin");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while logging in");
+    }
+  };
 
   const handleAdminRoute = () => {
-    navigation.navigate("Dispensary Dashboard");
+    navigation.navigate("Admin Dispensary Dashboard");
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.adminTitle}>Admin Login</Text>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Account</Text>
-        <TextInput style={styles.input} placeholder="xyz" />
+      <View style={styles.hmsContainer}>
+        <Text style={styles.hmsTitle}>Admin Login</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>User ID</Text>
+          <TextInput style={styles.input} onChangeText={setUsername} />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>Password</Text>
+          <TextInput
+            style={styles.input}
+            secureTextEntry={true}
+            onChangeText={setPassword}
+          />
+        </View>
+        <TouchableOpacity
+          style={styles.signInButton}
+          onPress={handleAdminLogin}
+        >
+          <Text style={styles.buttonText}>SIGN IN</Text>
+        </TouchableOpacity>
+        <Text style={styles.footerText}>
+          Need to make a new account?{" "}
+          <TouchableOpacity onPress={handleAdminRoute}>
+            <Text style={styles.linkText}>Register Here</Text>
+          </TouchableOpacity>
+        </Text>
       </View>
-
-      <View style={styles.passwordContainer}>
-        <Text style={styles.inputLabel}>Password</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="••••••••••"
-          secureTextEntry={true}
-        />
-        <MaterialCommunityIcons
-          name="eye-outline"
-          size={24}
-          color="black"
-          style={styles.icon}
-        />
-      </View>
-
-      <View style={styles.checkboxContainer}>
-        <MaterialCommunityIcons
-          name="checkbox-blank-outline"
-          size={24}
-          color="black"
-        />
-        <Text style={styles.rememberText}>Remember me</Text>
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
-      </View>
-
-      <TouchableOpacity style={styles.signInButton} onPress={handleAdminRoute}>
-        <Text style={styles.buttonText}>SIGN IN</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -71,66 +88,87 @@ export default function AdminLogin({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20 * (2560 / 1600),
+    flexDirection: "row",
+    marginTop: 80,
+  },
+  hmsContainer: {
+    flex: 1,
+    padding: 30,
+  },
+  imageBackground: {
+    flex: 1,
     justifyContent: "center",
-    backgroundColor: "#fff",
+  },
+  hmsTitle: {
+    fontFamily: "DM-Sans-Bold",
+    fontSize: 38,
+    marginBottom: 50,
+  },
+  adminContainer: {
+    flex: 1,
+    padding: 30,
+    justifyContent: "center",
   },
   adminTitle: {
-    fontFamily: "DMSans_700Bold",
-    fontSize: 30 * (2560 / 1600),
-    marginBottom: 40 * (2560 / 1600),
-    alignSelf: "center",
+    fontFamily: "DM-Sans-Bold",
+    fontSize: 38,
+    marginBottom: 50,
   },
   inputContainer: {
-    marginBottom: 20 * (2560 / 1600),
-  },
-  passwordContainer: {
-    marginBottom: 20 * (2560 / 1600),
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    marginBottom: 30,
+    borderBottomWidth: 1.5,
+    borderBottomColor: "#ddd",
   },
   inputLabel: {
-    fontFamily: "DMSans_400Regular",
-    fontSize: 16 * (2560 / 1600),
-    marginBottom: 10 * (2560 / 1600),
+    fontFamily: "DM-Sans-Regular",
+    fontSize: 20,
+    marginBottom: 15,
   },
   input: {
-    fontFamily: "DMSans_400Regular",
-    fontSize: 16 * (2560 / 1600),
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    flex: 1,
-  },
-  icon: {
-    marginLeft: 10,
+    fontFamily: "DM-Sans-Regular",
+    fontSize: 20,
   },
   signInButton: {
     backgroundColor: "#4A90E2",
-    padding: 15 * (2560 / 1600),
-    borderRadius: 5,
+    padding: 20,
+    borderRadius: 7,
     alignItems: "center",
-    marginBottom: 20 * (2560 / 1600),
+    marginBottom: 30,
   },
   buttonText: {
-    fontFamily: "DMSans_700Bold",
-    fontSize: 16 * (2560 / 1600),
+    fontFamily: "DM-Sans-Bold",
+    fontSize: 20,
     color: "#fff",
+  },
+  footerText: {
+    fontFamily: "DMSans_400Regular",
+    fontSize: 18,
+    textAlign: "center",
+  },
+  footerText2: {
+    fontFamily: "DM-Sans-Regular",
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 10,
+  },
+  linkText: {
+    fontFamily: "DM-Sans-Regular",
+    fontSize: 18,
+    color: "#4A90E2",
   },
   checkboxContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 20 * (2560 / 1600),
+    marginBottom: 30,
   },
   rememberText: {
-    fontFamily: "DMSans_400Regular",
-    fontSize: 14 * (2560 / 1600),
-    marginLeft: 10,
+    fontFamily: "DM-Sans-Regular",
+    fontSize: 18,
+    marginLeft: 15,
   },
   forgotPassword: {
-    fontFamily: "DMSans_400Regular",
-    fontSize: 14 * (2560 / 1600),
+    fontFamily: "DM-Sans-Regular",
+    fontSize: 18,
     marginLeft: "auto",
-    color: "#4A90E2",
   },
 });

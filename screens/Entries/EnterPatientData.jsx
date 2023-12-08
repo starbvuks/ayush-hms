@@ -6,9 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Dimensions,
 } from "react-native";
 import * as Location from "expo-location";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+// import SendOtp from "sendotp";
 
 import GenderPicker from "../../components/GenderPicker";
 
@@ -22,9 +24,31 @@ export default function PatientEntryScreen() {
     diagnosis: "",
     treatment: "",
     other_info: "",
+    phone_number: "",
   });
   const [location, setLocation] = useState(null);
   const [adhaarNumber, setAdhaarNumber] = useState("");
+  const [otp, setOtp] = useState("");
+  const [isOtpVerified, setIsOtpVerified] = useState(false);
+
+  // const sendOtp = new SendOtp("411187A01m3bdQKrT656dbcdeP1");
+
+  const verifyOtp = async () => {
+    try {
+      const response = await axios.post(
+        "https://api.messagecentral.com/verify-now",
+        {
+          otp: otp,
+        }
+      );
+      console.log(response.data);
+      if (response.data.status === "success") {
+        setIsOtpVerified(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const formatAdhaarNumber = (value) => {
     let formattedText = value.replace(/\D/g, ""); // Remove all non-digit characters
@@ -51,8 +75,17 @@ export default function PatientEntryScreen() {
         let currentLocation = await Location.getCurrentPositionAsync({});
         setLocation(currentLocation.coords);
         console.log(currentLocation.coords);
+
+        // const employee_id = await AsyncStorage.getItem("employee_id");
+        // const registered_dispensary = await AsyncStorage.getItem(
+        //   "registered_dispensary"
+        // );
+
+        console.log("Employee ID:", employee_id);
+        console.log("Registered Dispensary:", registered_dispensary);
       } catch (error) {
         console.log("Error while fetching location:", error);
+        console.error("Error retrieving data:", error.message);
       }
     })();
   }, []);
@@ -62,8 +95,8 @@ export default function PatientEntryScreen() {
   };
 
   const handleSubmit = () => {
-    if (!location) {
-      console.log("Unable to retrieve location");
+    if (!location || !isOtpVerified) {
+      console.log("Unable to retrieve location or OTP is not verified");
       return;
     }
 
@@ -161,6 +194,34 @@ export default function PatientEntryScreen() {
           );
         }
       })}
+      <TouchableOpacity
+        style={styles.submitButton}
+        onPress={() => {
+          axios
+            .get(
+              "https://api.msg91.com/api/v1/otp?authkey=411187A01m3bdQKrT656dbcdeP1&mobile=" +
+                patientData.phone_number +
+                "&message=Your OTP is {OTP}&sender=TESTIN&otp_length=4"
+            )
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }}
+      >
+        <Text style={styles.submitButtonText}>Send OTP</Text>
+      </TouchableOpacity>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Enter OTP"
+        onChangeText={(value) => setOtp(value)}
+      />
+      <TouchableOpacity style={styles.submitButton} onPress={verifyOtp}>
+        <Text style={styles.submitButtonText}>Verify OTP</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
