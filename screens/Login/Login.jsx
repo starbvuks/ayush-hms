@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 export default function LoginScreen({ navigation }) {
@@ -38,20 +38,23 @@ export default function LoginScreen({ navigation }) {
 
       if (data.message === "Logged in successfully") {
         try {
-          // await AsyncStorage.multiSet([
-          //   ["employee_id", data.employee_id.toString()],
-          //   ["registered_dispensary", data.registered_dispensary.toString()],
-          // ]);
+          await AsyncStorage.multiSet([
+            ["employee_id", data.employee_id.toString()],
+            ["registered_dispensary", data.registered_dispensary.toString()],
+          ]);
 
-          // const employee_id = await AsyncStorage.getItem("employee_id");
-          // const registered_dispensary = await AsyncStorage.getItem(
-          //   "registered_dispensary"
-          // );
+          const employee_id = await AsyncStorage.getItem("employee_id");
+          const registered_dispensary = await AsyncStorage.getItem(
+            "registered_dispensary"
+          );
 
           console.log("Employee ID:", employee_id);
           console.log("Registered Dispensary:", registered_dispensary);
 
-          navigation.navigate("Main");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Main" }],
+          });
         } catch (error) {
           console.error(error);
           alert("An error occurred while saving data to local storage");
@@ -75,7 +78,7 @@ export default function LoginScreen({ navigation }) {
         console.error("Message:", error.message);
       }
       console.error(error.config);
-      alert("An error occurred while logging in");
+      alert("invalid username or password");
     }
   };
 
@@ -184,6 +187,8 @@ const styles = StyleSheet.create({
     fontFamily: "DMSans_400Regular",
     fontSize: 18,
     textAlign: "center",
+
+    marginTop: 5,
   },
   footerText2: {
     fontFamily: "DM-Sans-Regular",

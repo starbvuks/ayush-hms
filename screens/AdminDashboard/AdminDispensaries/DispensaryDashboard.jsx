@@ -22,32 +22,62 @@ export default function AdminDispensaryDashboard({ navigation }) {
 
     fetchData();
   }, []);
+
+  const formatData = (data) => {
+    return Object.entries(data)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(", ");
+  };
+
+  const formatDispensaryData = (dispensary) => {
+    return `Dispensary of ID: ${dispensary.dispensary_id}\nLocation: ${dispensary.location}\nTotal Entries: ${dispensary.count}`;
+  };
+
+  const formatEmployeeData = (employee) => {
+    return `Employee of ID: ${employee.employee_id}\nDispensary: ${employee.dispensary_id}\nCount: ${employee.count}`;
+  };
+
   return (
     <ScrollView style={styles.container}>
-      <View>
-        {dashboardData && (
-          <>
-            <Text>
-              Total number of dispensaries: {dashboardData.totalDispensaries}
-            </Text>
-            <Text>
-              Employees per dispensary:{" "}
-              {JSON.stringify(dashboardData.employeesPerDispensary)}
-            </Text>
-            <Text>
-              Most entries given at a specific day:{" "}
-              {JSON.stringify(dashboardData.mostEntriesDay)}
-            </Text>
-            <Text>
-              Dispensary with the highest number of employees entering data:{" "}
-              {JSON.stringify(dashboardData.mostActiveDispensary)}
-            </Text>
-            <Text>
-              Total entries given by each dispensary:{" "}
-              {JSON.stringify(dashboardData.totalEntries)}
-            </Text>
-          </>
-        )}
+      <View style={styles.dataBlock}>
+        <Text style={styles.dataTitle}>Total number of dispensaries:</Text>
+        <Text style={styles.dataValue}>{dashboardData?.totalDispensaries}</Text>
+      </View>
+      <View style={styles.dataBlock}>
+        <Text style={styles.dataTitle}>Employees per dispensary:</Text>
+        <ScrollView vertical>
+          {dashboardData?.employeesPerDispensary
+            .slice(0, 5)
+            .map((entry, index) => (
+              <Text key={index}>{formatEmployeeData(entry)}</Text>
+            ))}
+        </ScrollView>
+      </View>
+      <View style={styles.dataBlock}>
+        <Text style={styles.dataTitle}>
+          Most entries given at a specific day:
+        </Text>
+        <Text style={styles.dataValue}>
+          {formatData(dashboardData?.mostEntriesDay)}
+        </Text>
+      </View>
+      <View style={styles.dataBlock}>
+        <Text style={styles.dataTitle}>
+          Dispensary with the highest number of employees entering data:
+        </Text>
+        <Text style={styles.dataValue}>
+          {formatDispensaryData(dashboardData?.mostActiveDispensary)}
+        </Text>
+      </View>
+      <View style={styles.dataBlock}>
+        <Text style={styles.dataTitle}>
+          Total entries given by each dispensary:
+        </Text>
+        <ScrollView horizontal>
+          {dashboardData?.totalEntries.slice(0, 5).map((entry, index) => (
+            <Text key={index}>{formatDispensaryData(entry)}</Text>
+          ))}
+        </ScrollView>
       </View>
     </ScrollView>
   );
@@ -60,67 +90,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingTop: 50,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  profileImage: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: "gray",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginLeft: 20,
-  },
-  dispensaryTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-  chartContainer: {
+  dataBlock: {
+    backgroundColor: "#F1F1F1",
     padding: 20,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
     marginBottom: 20,
+    borderRadius: 8,
   },
-  chartTitle: {
+  dataTitle: {
     fontSize: 20,
     fontWeight: "bold",
-  },
-  filterButton: {
-    alignSelf: "flex-end",
-    backgroundColor: "#007BFF",
-    padding: 10,
-    borderRadius: 5,
-  },
-  filterText: {
-    color: "white",
-  },
-  chartPlaceholder: {
-    width: "100%",
-    height: 200,
-    backgroundColor: "#F1F1F1",
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  entriesCount: {
-    fontSize: 18,
     marginBottom: 10,
   },
-  filterButtonSmall: {
-    alignSelf: "flex-end",
-    backgroundColor: "#007BFF",
-    padding: 8,
-    borderRadius: 5,
-  },
-  footerIcons: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 50,
+  dataValue: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });

@@ -11,6 +11,7 @@ import AdminLogin from "../screens/Login/AdminLogin";
 
 import RegisteredDispensaryDetails from "../screens/Dispensaries/RegisteredDispensaryDetails";
 import PatientEntryScreen from "../screens/Entries/EnterPatientData";
+import PatientEntries from "../screens/Entries/PatientEntries";
 
 import AdminDispensaryDashboard from "../screens/AdminDashboard/AdminDispensaries/DispensaryDashboard";
 import AdminEmployees from "../screens/AdminDashboard/Employees/AdminEmployees";
@@ -138,6 +139,11 @@ function AppNavigator() {
       <Stack.Screen
         name="Enter Patient Data"
         component={PatientEntryScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Patient Entries"
+        component={PatientEntries}
         options={{ headerShown: false }}
       />
       <Stack.Screen

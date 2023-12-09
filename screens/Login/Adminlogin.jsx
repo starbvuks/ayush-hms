@@ -55,7 +55,7 @@ export default function AdminLogin({ navigation }) {
   };
 
   const handleAdminRoute = () => {
-    navigation.navigate("Admin Dispensary Dashboard");
+    navigation.navigate("Login");
   };
 
   return (
@@ -81,9 +81,9 @@ export default function AdminLogin({ navigation }) {
           <Text style={styles.buttonText}>SIGN IN</Text>
         </TouchableOpacity>
         <Text style={styles.footerText}>
-          Need to make a new account?{" "}
+          Back to Employee Login?{" "}
           <TouchableOpacity onPress={handleAdminRoute}>
-            <Text style={styles.linkText}>Register Here</Text>
+            <Text style={styles.linkText}>Press Here</Text>
           </TouchableOpacity>
         </Text>
       </View>
