@@ -29,7 +29,13 @@ const PatientEntries = () => {
           const response = await axios.get(
             `http://192.168.29.226:3000/patient-entries?dispensary_id=${registered_dispensary}&page=${page}&pageSize=${pageSize}`
           );
-          setEntries(response.data.patientEntries);
+          // Check if the server returned any new data
+          if (response.data.patientEntries.length > 0) {
+            setEntries((prevEntries) => [
+              ...prevEntries,
+              ...response.data.patientEntries,
+            ]);
+          }
         } catch (error) {
           console.error("Error fetching patient entries:", error);
         }

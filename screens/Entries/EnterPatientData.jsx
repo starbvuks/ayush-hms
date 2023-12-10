@@ -28,6 +28,7 @@ export default function PatientEntryScreen() {
   const [location, setLocation] = useState(null);
   const [adhaarNumber, setAdhaarNumber] = useState("");
   const [employeeId, setEmployeeId] = useState();
+  const [registeredDispensary, setRegisteredDispensary] = useState();
 
   const formatAdhaarNumber = (value) => {
     let formattedText = value.replace(/\D/g, ""); // Remove all non-digit characters
@@ -61,6 +62,7 @@ export default function PatientEntryScreen() {
         const registered_dispensary = await AsyncStorage.getItem(
           "registered_dispensary"
         );
+        setRegisteredDispensary(registered_dispensary);
 
         console.log("Employee ID:", employee_id);
         console.log("Registered Dispensary:", registered_dispensary);
@@ -84,6 +86,7 @@ export default function PatientEntryScreen() {
     const formData = {
       patientData: patientData,
       employeeId: employeeId,
+      dispensaryId: registeredDispensary,
       location: {
         longitude: location.longitude,
         latitude: location.latitude,
@@ -234,6 +237,7 @@ const styles = StyleSheet.create({
   },
   smallInput: {
     height: 40,
+    width: "100%",
     fontSize: 25,
     fontFamily: "DM-Sans-Normal",
   },
