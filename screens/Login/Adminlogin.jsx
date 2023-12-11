@@ -20,6 +20,8 @@ export default function AdminLogin({ navigation }) {
       return;
     }
 
+    console.log(username, password);
+
     try {
       console.log("Sending login request...");
       const response = await axios.post(
@@ -40,8 +42,12 @@ export default function AdminLogin({ navigation }) {
         return;
       }
 
-      if (data.message === "Logged in successfully") {
-        if (data.role === "super_admin" || "zone_admin_1" || "zone_admin_2") {
+      if (data && data.message === "Logged in successfully") {
+        if (
+          data.role === "super_admin" ||
+          data.role === "zone_admin_1" ||
+          data.role === "zone_admin_2"
+        ) {
           setUserRole("admin");
           navigation.navigate("Admin");
         } else {

@@ -17,6 +17,7 @@ export default function AdminDispensaryDashboard({ navigation }) {
       const response = await axios.get(
         "http://192.168.29.226:3000/admin/dashboard"
       );
+      console.log(response.data);
       setDashboardData(response.data);
     };
 
@@ -41,7 +42,9 @@ export default function AdminDispensaryDashboard({ navigation }) {
     <ScrollView style={styles.container}>
       <View style={styles.dataBlock}>
         <Text style={styles.dataTitle}>Total number of dispensaries:</Text>
-        <Text style={styles.dataValue}>{dashboardData?.totalDispensaries}</Text>
+        <Text style={styles.dataValue}>
+          {dashboardData && dashboardData.totalDispensaries}
+        </Text>
       </View>
       <View style={styles.dataBlock}>
         <Text style={styles.dataTitle}>Employees per dispensary:</Text>
