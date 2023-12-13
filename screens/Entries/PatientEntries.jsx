@@ -18,6 +18,8 @@ const PatientEntries = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [registeredDispensary, setRegisteredDispensary] = useState(null);
 
+  const apiIp = process.env.EXPO_PUBLIC_API_URL
+
   useEffect(() => {
     const fetchData = async () => {
       const registered_dispensary = await AsyncStorage.getItem(
@@ -27,7 +29,7 @@ const PatientEntries = () => {
       if (registered_dispensary) {
         try {
           const response = await axios.get(
-            `http://192.168.29.226:3000/patient-entries?dispensary_id=${registered_dispensary}&page=${page}&pageSize=${pageSize}`
+            `http://${apiIp}:3000/patient-entries?dispensary_id=${registered_dispensary}&page=${page}&pageSize=${pageSize}`
           );
           // Check if the server returned any new data
           if (response.data.patientEntries.length > 0) {
@@ -49,7 +51,7 @@ const PatientEntries = () => {
     const fetchSearchData = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.29.226:3000/patient-entries/search?searchTerm=${searchTerm}`
+          `http://${apiIp}:3000/patient-entries/search?searchTerm=${searchTerm}`
         );
         setEntries(response.data);
       } catch (error) {

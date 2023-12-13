@@ -18,6 +18,8 @@ export default function App() {
     "DM-Sans-Bold": DMSans_700Bold,
   });
 
+  // windows api ip: 192.168.29.226
+
   if (!fontsLoaded) {
     return <AppLoading />;
   }

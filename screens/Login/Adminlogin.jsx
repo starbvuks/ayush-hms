@@ -14,6 +14,8 @@ export default function AdminLogin({ navigation }) {
   const [password, setPassword] = useState("");
   const [userRole, setUserRole] = useState(null);
 
+  const apiIp = process.env.EXPO_PUBLIC_API_URL
+
   const handleAdminLogin = async () => {
     if (username === "" || password === "") {
       alert("Please fill all fields");
@@ -25,7 +27,7 @@ export default function AdminLogin({ navigation }) {
     try {
       console.log("Sending login request...");
       const response = await axios.post(
-        "http://192.168.29.226:3000/admin/login",
+        `http://192.168.0.111:3000/admin/login`,
         {
           username: username,
           password: password,
@@ -60,6 +62,10 @@ export default function AdminLogin({ navigation }) {
     }
   };
 
+  const handleAdminLogin2 = () => {
+    navigation.navigate("Admin");
+  }
+
   const handleAdminRoute = () => {
     navigation.navigate("Login");
   };
@@ -82,7 +88,7 @@ export default function AdminLogin({ navigation }) {
         </View>
         <TouchableOpacity
           style={styles.signInButton}
-          onPress={handleAdminLogin}
+          onPress={handleAdminLogin2}
         >
           <Text style={styles.buttonText}>SIGN IN</Text>
         </TouchableOpacity>

@@ -13,6 +13,8 @@ export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const apiIp = process.env.EXPO_PUBLIC_API_URL
+
   const handleSignIn = async () => {
     if (username === "" || password === "") {
       alert("Please fill all fields");
@@ -21,7 +23,7 @@ export default function LoginScreen({ navigation }) {
 
     try {
       console.log("Sending login request...");
-      const response = await axios.post("http://192.168.29.226:3000/login", {
+      const response = await axios.post(`http://${apiIp}:3000/login`, {
         username: username,
         password: password,
       });
@@ -116,12 +118,12 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.linkText}>Login Here</Text>
           </TouchableOpacity>
         </Text>
-        <Text style={styles.footerText2}>
+        {/* <Text style={styles.footerText2}>
           Need to make a new account?{" "}
           <TouchableOpacity onPress={handleAdminRoute}>
             <Text style={styles.linkText}>Register Here</Text>
           </TouchableOpacity>
-        </Text>
+        </Text> */}
         {/* </ImageBackground> */}
       </View>
     </View>

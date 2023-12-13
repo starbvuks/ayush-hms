@@ -14,6 +14,7 @@ import PatientEntryScreen from "../screens/Entries/EnterPatientData";
 import PatientEntries from "../screens/Entries/PatientEntries";
 
 import AdminDispensaryDashboard from "../screens/AdminDashboard/AdminDispensaries/DispensaryDashboard";
+import DispensaryList from "../screens/AdminDashboard/Employees/DispensaryList";
 import AdminEmployees from "../screens/AdminDashboard/Employees/AdminEmployees";
 import AdminProfile from "../screens/AdminDashboard/Profile/AdminProfile";
 
@@ -88,9 +89,9 @@ function AdminTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Admin Employees"
+        name="Admin Employees Dispensaries"
         style={styles.tabItem}
-        component={AdminEmployees} // replace with your actual Employees screen component
+        component={DispensaryList} // replace with your actual Employees screen component
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
@@ -149,6 +150,11 @@ function AppNavigator() {
       <Stack.Screen
         name="Admin Login"
         component={AdminLogin}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Admin Employees"
+        component={AdminEmployees}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

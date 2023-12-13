@@ -30,6 +30,8 @@ export default function PatientEntryScreen() {
   const [employeeId, setEmployeeId] = useState();
   const [registeredDispensary, setRegisteredDispensary] = useState();
 
+  const apiIp = process.env.EXPO_PUBLIC_API_URL
+
   const formatAdhaarNumber = (value) => {
     let formattedText = value.replace(/\D/g, ""); // Remove all non-digit characters
     if (formattedText.length > 0) {
@@ -77,32 +79,33 @@ export default function PatientEntryScreen() {
     setPatientData({ ...patientData, [name]: value });
   };
 
-  const handleSubmit = () => {
-    if (!location) {
-      console.log("Unable to retrieve location");
-      return;
-    }
+const handleSubmit = () => {
+ if (!location) {
+   console.log("Unable to retrieve location");
+   return;
+ }
 
-    const formData = {
-      patientData: patientData,
-      employeeId: employeeId,
-      dispensaryId: registeredDispensary,
-      location: {
-        longitude: location.longitude,
-        latitude: location.latitude,
-      },
-    };
+ const formData = {
+   patientData: patientData,
+   employeeId: employeeId,
+   dispensaryId: registeredDispensary,
+   location: {
+     longitude: location.longitude,
+     latitude: location.latitude,
+   },
+ };
 
-    console.log("Form data:", formData); // Log the form data
+ console.log("Form data:", formData); // Log the form data
 
-    fetch("http://192.168.29.226:3000/patient-data", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-  };
+ fetch(`http://192.168.0.111:3000/patient-data`, {
+   method: "POST",
+   headers: {
+     "Content-Type": "application/json",
+   },
+   body: JSON.stringify(formData),
+ });
+};
+
 
   return (
     <ScrollView
