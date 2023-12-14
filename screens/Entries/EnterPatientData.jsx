@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 
 import GenderPicker from "../../components/GenderPicker";
 
@@ -30,7 +29,7 @@ export default function PatientEntryScreen() {
   const [employeeId, setEmployeeId] = useState();
   const [registeredDispensary, setRegisteredDispensary] = useState();
 
-  const apiIp = process.env.EXPO_PUBLIC_API_URL
+  const apiIp = process.env.EXPO_PUBLIC_API_URL;
 
   const formatAdhaarNumber = (value) => {
     let formattedText = value.replace(/\D/g, ""); // Remove all non-digit characters
@@ -79,33 +78,32 @@ export default function PatientEntryScreen() {
     setPatientData({ ...patientData, [name]: value });
   };
 
-const handleSubmit = () => {
- if (!location) {
-   console.log("Unable to retrieve location");
-   return;
- }
+  const handleSubmit = () => {
+    if (!location) {
+      console.log("Unable to retrieve location");
+      return;
+    }
 
- const formData = {
-   patientData: patientData,
-   employeeId: employeeId,
-   dispensaryId: registeredDispensary,
-   location: {
-     longitude: location.longitude,
-     latitude: location.latitude,
-   },
- };
+    const formData = {
+      patientData: patientData,
+      employeeId: employeeId,
+      dispensaryId: registeredDispensary,
+      location: {
+        longitude: location.longitude,
+        latitude: location.latitude,
+      },
+    };
 
- console.log("Form data:", formData); // Log the form data
+    console.log("Form data:", formData); // Log the form data
 
- fetch(`http://192.168.0.111:3000/patient-data`, {
-   method: "POST",
-   headers: {
-     "Content-Type": "application/json",
-   },
-   body: JSON.stringify(formData),
- });
-};
-
+    fetch(`http://192.168.0.111:3000/patient-data`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+  };
 
   return (
     <ScrollView
@@ -167,6 +165,21 @@ const handleSubmit = () => {
               </View>
             </View>
           );
+        } else if (key === "phone_number") {
+          return (
+            <View>
+              <Text style={styles.inputLabel}>{key.replace("_", " ")}</Text>
+              <View key={key} style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder=""
+                  keyboardType="numeric"
+                  onChangeText={(value) => handleInputChange(key, value)}
+                  maxLength={10}
+                />
+              </View>
+            </View>
+          );
         } else {
           return (
             <View>
@@ -179,7 +192,6 @@ const handleSubmit = () => {
               </View>
             </View>
           );
-          Cold;
         }
       })}
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>

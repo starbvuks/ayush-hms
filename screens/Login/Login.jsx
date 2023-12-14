@@ -23,7 +23,7 @@ export default function LoginScreen({ navigation }) {
 
     try {
       console.log("Sending login request...");
-      const response = await axios.post(`http://${apiIp}:3000/login`, {
+      const response = await axios.post(`http://192.168.0.111:3000/login`, {
         username: username,
         password: password,
       });

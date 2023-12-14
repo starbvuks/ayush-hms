@@ -19,6 +19,8 @@ export default function DispensariesScreen({ navigation }) {
     { id: "2", icon: "logout", label: "Logout" },
   ];
 
+  // need to ad my profile and about pagees
+
   const handleLogout = async () => {
     try {
       // Remove the user's data from AsyncStorage

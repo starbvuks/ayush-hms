@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   optionContainer: {
-    backgroundColor: "#ECF0F9",
+    backgroundColor: "#2E475D",
     borderRadius: 10,
     padding: 20,
     marginBottom: 20,
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 24,
     marginTop: 10,
-    color: "#2E475D",
+    color: "#ECF0F9",
     textAlign: "center",
     fontFamily: "DM-Sans-Bold",
   },

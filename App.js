@@ -27,12 +27,35 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <View style={styles.headerBlock1}>
         <Image
-          source={require("./assets/logo.png")}
-          style={styles.logo}
-          resizeMode="contain"
-        />
-        <Text style={styles.appName}>Ayush HMS</Text>
+            source={require("./assets/damodar-sir.jpeg")}
+            style={styles.pic}
+            resizeMode="contain"
+          />
+          <Image
+            source={require("./assets/mallu-sir.jpeg")}
+            style={styles.pic}
+            resizeMode="contain"
+          />
+          <Image
+            source={require("./assets/revanth-sir.jpeg")}
+            style={styles.pic}
+            resizeMode="contain"
+          />
+        </View>
+        <View>
+          <Image
+            source={require("./assets/logo.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Image
+            source={require("./assets/nam.jpeg")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+        </View>
       </View>
       <NavigationContainer style={styles.container}>
         <AppNavigator />
@@ -46,15 +69,23 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     height: 170,
     backgroundColor: "#2E475D",
     paddingHorizontal: 20,
   },
+  headerBlock1: {
+    flexDirection: "row"
+  },
   logo: {
+    width: 70,
+    height: 70,
+    marginRight: 10,
+  },
+  pic: {
     width: 120,
     height: 120,
-    marginRight: 10,
+
   },
   appName: {
     fontSize: 36,
