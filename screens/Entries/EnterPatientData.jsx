@@ -6,9 +6,12 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import * as Location from "expo-location";
+import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 import GenderPicker from "../../components/GenderPicker";
 
@@ -28,6 +31,8 @@ export default function PatientEntryScreen() {
   const [adhaarNumber, setAdhaarNumber] = useState("");
   const [employeeId, setEmployeeId] = useState();
   const [registeredDispensary, setRegisteredDispensary] = useState();
+
+  const navigation = useNavigation();
 
   const apiIp = process.env.EXPO_PUBLIC_API_URL;
 
@@ -49,24 +54,43 @@ export default function PatientEntryScreen() {
       try {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
-          console.log("Location permission not granted");
+          Alert.alert("Error", "Location permission not granted", [
+            {
+              text: "OK",
+              onPress: () => navigation.goBack(),
+            },
+          ]);
           return;
         }
 
         let currentLocation = await Location.getCurrentPositionAsync({});
         setLocation(currentLocation.coords);
-        console.log(currentLocation.coords);
 
         const employee_id = await AsyncStorage.getItem("employee_id");
+        if (!employee_id) {
+          Alert.alert("Error", "Please logout and login again", [
+            {
+              text: "OK",
+              onPress: () => navigation.goBack(),
+            },
+          ]);
+          return;
+        }
         setEmployeeId(employee_id);
 
         const registered_dispensary = await AsyncStorage.getItem(
           "registered_dispensary"
         );
+        if (!registered_dispensary) {
+          Alert.alert("Error", "Please logout and login again", [
+            {
+              text: "OK",
+              onPress: () => navigation.goBack(),
+            },
+          ]);
+          return;
+        }
         setRegisteredDispensary(registered_dispensary);
-
-        console.log("Employee ID:", employee_id);
-        console.log("Registered Dispensary:", registered_dispensary);
       } catch (error) {
         console.log("Error while fetching location:", error);
         console.error("Error retrieving data:", error.message);
@@ -80,7 +104,12 @@ export default function PatientEntryScreen() {
 
   const handleSubmit = () => {
     if (!location) {
-      console.log("Unable to retrieve location");
+      Alert.alert("Error", "Location must be on", [
+        {
+          text: "OK",
+          onPress: () => navigation.goBack(),
+        },
+      ]);
       return;
     }
 
@@ -96,13 +125,37 @@ export default function PatientEntryScreen() {
 
     console.log("Form data:", formData); // Log the form data
 
-    fetch(`http://192.168.0.111:3000/patient-data`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    axios
+      .post(`http://${apiIp}:3000/patient-entry`, formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          Alert.alert("Success", "Data submitted successfully", [
+            {
+              text: "OK",
+              onPress: () => navigation.navigate("Main"),
+            },
+          ]);
+        } else {
+          Alert.alert("Error", "Failure in data submission. Try again.", [
+            {
+              text: "OK",
+              onPress: () => navigation.navigate("Main"),
+            },
+          ]);
+        }
+      })
+      .catch((error) => {
+        Alert.alert("Error", `Failed to submit data: ${error.message}`, [
+          {
+            text: "OK",
+            onPress: () => navigation.navigate("Main"),
+          },
+        ]);
+      });
   };
 
   return (

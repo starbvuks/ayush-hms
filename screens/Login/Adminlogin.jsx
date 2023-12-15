@@ -14,7 +14,7 @@ export default function AdminLogin({ navigation }) {
   const [password, setPassword] = useState("");
   const [userRole, setUserRole] = useState(null);
 
-  const apiIp = process.env.EXPO_PUBLIC_API_URL
+  const apiIp = process.env.EXPO_PUBLIC_API_URL;
 
   const handleAdminLogin = async () => {
     if (username === "" || password === "") {
@@ -64,7 +64,7 @@ export default function AdminLogin({ navigation }) {
 
   const handleAdminLogin2 = () => {
     navigation.navigate("Admin");
-  }
+  };
 
   const handleAdminRoute = () => {
     navigation.navigate("Login");

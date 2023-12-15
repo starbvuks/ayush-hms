@@ -14,6 +14,9 @@ import PatientEntryScreen from "../screens/Entries/EnterPatientData";
 import PatientEntries from "../screens/Entries/PatientEntries";
 
 import AdminDispensaryDashboard from "../screens/AdminDashboard/AdminDispensaries/DispensaryDashboard";
+import DashDispensaryListScreen from "../screens/AdminDashboard/AdminDispensaries/DashDispensaryList";
+import AdminDispensaryEntries from "../screens/AdminDashboard/AdminDispensaries/AdminDispensaryEntries";
+
 import DispensaryList from "../screens/AdminDashboard/Employees/DispensaryList";
 import AdminEmployees from "../screens/AdminDashboard/Employees/AdminEmployees";
 import AdminProfile from "../screens/AdminDashboard/Profile/AdminProfile";
@@ -74,9 +77,9 @@ function AdminTabNavigator() {
       }}
     >
       <Tab.Screen
-        name="Admin Dispensary Dashboard"
+        name="Admin Dash Dispensary List"
         style={styles.tabItem}
-        component={AdminDispensaryDashboard}
+        component={DashDispensaryListScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
@@ -155,6 +158,11 @@ function AppNavigator() {
       <Stack.Screen
         name="Admin Employees"
         component={AdminEmployees}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Admin Dispensary Entries"
+        component={AdminDispensaryEntries}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

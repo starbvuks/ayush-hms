@@ -1,57 +1,56 @@
 import React, { useState, useEffect } from "react";
 import {
-  FlatList,
   View,
   Text,
-  Button,
+  FlatList,
+  TouchableOpacity,
   StyleSheet,
   TextInput,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const PatientEntries = () => {
+import TimelinePicker from "../../../components/TimelinePicker";
+
+const AdminDispensaryEntries = () => {
   const [entries, setEntries] = useState([]);
-  const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [timeframe, setTimeframe] = useState("today");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const pageSize = 7;
+  const route = useRoute();
+  const dispensaryId = route.params.dispensaryId;
   const apiIp = process.env.EXPO_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {
-      const registered_dispensary = await AsyncStorage.getItem(
-        "registered_dispensary"
-      );
-
-      if (registered_dispensary) {
-        try {
-          const response = await axios.get(
-            `http://${apiIp}:3000/patient-entries?dispensary_id=${registered_dispensary}&page=${page}&pageSize=${pageSize}`
-          );
-          // Check if the server returned any new data
-          if (response.data.patientEntries.length > 0) {
-            setEntries((prevEntries) => [
-              ...prevEntries,
-              ...response.data.patientEntries,
-            ]);
-          }
-        } catch (error) {
-          console.error("Error fetching patient entries:", error);
-        }
+      try {
+        const response = await axios.get(
+          `http://${apiIp}:3000/dispensaries/${dispensaryId}/patient-entries/${timeframe}?page=${currentPage}&pageSize=7`
+        );
+        setEntries((prevEntries) => [...prevEntries, ...response.data]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [page, pageSize]);
+  }, [dispensaryId, timeframe, currentPage]);
 
   useEffect(() => {
     const fetchSearchData = async () => {
       try {
         const response = await axios.get(
-          `http://${apiIp}:3000/patient-entries/search?searchTerm=${searchTerm}`
+          `http://${apiIp}:3000/admin/dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
         );
-        setEntries(response.data);
+        // Check if the response data is an array
+        if (Array.isArray(response.data)) {
+          setEntries(response.data);
+        } else {
+          // Convert the response data to an array
+          setEntries(Object.values(response.data));
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -60,24 +59,19 @@ const PatientEntries = () => {
     if (searchTerm) {
       fetchSearchData();
     }
-  }, [searchTerm]);
-
-  const handleLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
+  }, [searchTerm, timeframe]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.subheading}>Patient Entries:</Text>
       <TextInput
         style={styles.searchBar}
         onChangeText={setSearchTerm}
         value={searchTerm}
-        placeholder="Search by name or diagnosis"
+        placeholder="Search by name, diagnosis"
       />
+      <TimelinePicker onTimeframeChange={setTimeframe} />
       <FlatList
         data={entries}
-        keyExtractor={(item) => item.entry_id.toString()}
         renderItem={({ item }) => {
           const date = new Date(item.entry_date);
           const day = date.getDate();
@@ -122,7 +116,9 @@ const PatientEntries = () => {
             </View>
           );
         }}
-        onEndReached={handleLoadMore}
+        keyExtractor={(item) => item.entry_id.toString()}
+        numColumns={1}
+        onEndReached={() => setCurrentPage((prevPage) => prevPage + 1)}
         onEndReachedThreshold={0.5}
       />
     </View>
@@ -134,12 +130,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     padding: 10,
-  },
-  subheading: {
-    fontSize: 38,
-    fontWeight: "bold",
-    padding: 28,
-    color: "#2E475D",
   },
   searchBar: {
     height: 60,
@@ -214,21 +204,19 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
 
-  paginationButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginHorizontal: 4,
-    backgroundColor: "gray",
-  },
-  activeButton: {
-    backgroundColor: "#22c55d",
-    width: 50,
+  picker: {
     height: 50,
-    borderRadius: 25,
+    width: 200,
+  },
+  optionContainer: {
+    flex: 1,
+    flexDirection: "row",
+    margin: 10,
+  },
+  optionText: {
+    fontSize: 15,
+    marginLeft: 10,
   },
 });
 
-export default PatientEntries;
+export default AdminDispensaryEntries;

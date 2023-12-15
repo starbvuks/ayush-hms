@@ -19,6 +19,7 @@ export default function App() {
   });
 
   // windows api ip: 192.168.29.226
+  // 506 ip: 192.168.0.111
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -28,7 +29,7 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerBlock1}>
-        <Image
+          <Image
             source={require("./assets/damodar-sir.jpeg")}
             style={styles.pic}
             resizeMode="contain"
@@ -39,7 +40,7 @@ export default function App() {
             resizeMode="contain"
           />
           <Image
-            source={require("./assets/revanth-sir.jpeg")}
+            source={require("./assets/revanth-sir.jpg")}
             style={styles.pic}
             resizeMode="contain"
           />
@@ -59,7 +60,7 @@ export default function App() {
       </View>
       <NavigationContainer style={styles.container}>
         <AppNavigator />
-        <StatusBar style="auto" />
+        <StatusBar hidden={true} />
       </NavigationContainer>
     </View>
   );
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   headerBlock1: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   logo: {
     width: 70,
@@ -85,7 +86,6 @@ const styles = StyleSheet.create({
   pic: {
     width: 120,
     height: 120,
-
   },
   appName: {
     fontSize: 36,

@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
-const DispensaryListScreen = () => {
+const DashDispensaryListScreen = () => {
   const [dispensaries, setDispensaries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const navigation = useNavigation();
@@ -65,7 +65,7 @@ const DispensaryListScreen = () => {
           <TouchableOpacity
             style={styles.optionContainer}
             onPress={() =>
-              navigation.navigate("Admin Employees", {
+              navigation.navigate("Admin Dispensary Entries", {
                 dispensaryId: item.dispensary_id,
               })
             }
@@ -129,4 +129,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DispensaryListScreen;
+export default DashDispensaryListScreen;
