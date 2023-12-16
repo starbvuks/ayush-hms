@@ -42,7 +42,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "axios": "^1.6.2"
+    "axios": "^1.6.2",
+    "react-native-eject": "^0.2.0"
   },
   "private": true
 }

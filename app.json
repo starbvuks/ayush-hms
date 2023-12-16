@@ -1,13 +1,13 @@
 {
   "expo": {
     "name": "Ayush-HMS",
-    "slug": "Ayush-HMS",
+    "slug": "ayush",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/nam.jpeg",
+      "image": "./assets/nam.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -29,8 +29,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "93040d38-b918-44df-a9c7-2cb873017e72"
+        "projectId": "73eb054f-c69f-4a21-8142-d0659c8e173b"
       }
-    }
+    },
+    "owner": "sarvag"
   }
 }
