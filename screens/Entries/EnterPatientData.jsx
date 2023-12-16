@@ -11,11 +11,11 @@ import {
 import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
+import { handlePatientSubmit } from "../../api/entries/enterPatientData";
 
 import GenderPicker from "../../components/GenderPicker";
 
-export default function PatientEntryScreen() {
+export default function EnterPatientData() {
   const [patientData, setPatientData] = useState({
     first_name: "",
     last_name: "",
@@ -102,60 +102,15 @@ export default function PatientEntryScreen() {
     setPatientData({ ...patientData, [name]: value });
   };
 
-  const handleSubmit = () => {
-    if (!location) {
-      Alert.alert("Error", "Location must be on", [
-        {
-          text: "OK",
-          onPress: () => navigation.goBack(),
-        },
-      ]);
-      return;
-    }
-
-    const formData = {
-      patientData: patientData,
-      employeeId: employeeId,
-      dispensaryId: registeredDispensary,
-      location: {
-        longitude: location.longitude,
-        latitude: location.latitude,
-      },
-    };
-
-    console.log("Form data:", formData); // Log the form data
-
-    axios
-      .post(`http://${apiIp}:3000/patient-entry`, formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          Alert.alert("Success", "Data submitted successfully", [
-            {
-              text: "OK",
-              onPress: () => navigation.navigate("Main"),
-            },
-          ]);
-        } else {
-          Alert.alert("Error", "Failure in data submission. Try again.", [
-            {
-              text: "OK",
-              onPress: () => navigation.navigate("Main"),
-            },
-          ]);
-        }
-      })
-      .catch((error) => {
-        Alert.alert("Error", `Failed to submit data: ${error.message}`, [
-          {
-            text: "OK",
-            onPress: () => navigation.navigate("Main"),
-          },
-        ]);
-      });
+  const onSubmit = async () => {
+    await handleSubmit(
+      patientData,
+      employeeId,
+      registeredDispensary,
+      location,
+      apiIp,
+      navigation
+    );
   };
 
   return (
@@ -247,7 +202,7 @@ export default function PatientEntryScreen() {
           );
         }
       })}
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+      <TouchableOpacity style={styles.submitButton} onPress={onSubmit}>
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
     </ScrollView>

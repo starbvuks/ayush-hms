@@ -1,27 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { fetchDispensaryName } from "../../api/dispensaries/registeredDispensaryDetails";
 
 export default function RegisteredDispensaryDetails() {
   const [dispensaryName, setDispensaryName] = useState("");
   const apiIp = process.env.EXPO_PUBLIC_API_URL;
 
   useEffect(() => {
-    const fetchDispensaryName = async () => {
-      const registeredDispensary = await AsyncStorage.getItem(
-        "registered_dispensary"
-      );
-      const apiEndpoint = `http://${apiIp}:3000/my-dispensary/${registeredDispensary}`;
-
-      fetch(apiEndpoint)
-        .then((response) => response.json())
-        .then((data) => {
-          setDispensaryName(data.dispensary_name);
-        })
-        .catch((error) => console.error("Error:", error));
-    };
-
-    fetchDispensaryName();
+    fetchDispensaryName(setDispensaryName, apiIp);
   }, []);
 
   return (

@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-} from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { View, Text, FlatList, StyleSheet, TextInput } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import axios from "axios";
+
+import {
+  fetchData,
+  fetchSearchData,
+} from "../../../api/adminDashboard/adminEntries/adminDispensaryEntries";
 
 import TimelinePicker from "../../../components/TimelinePicker";
 
@@ -24,41 +20,11 @@ const AdminDispensaryEntries = () => {
   const apiIp = process.env.EXPO_PUBLIC_API_URL;
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://${apiIp}:3000/dispensaries/${dispensaryId}/patient-entries/${timeframe}?page=${currentPage}&pageSize=7`
-        );
-        setEntries((prevEntries) => [...prevEntries, ...response.data]);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+    fetchData(dispensaryId, timeframe, currentPage, setEntries, apiIp);
   }, [dispensaryId, timeframe, currentPage]);
 
   useEffect(() => {
-    const fetchSearchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://${apiIp}:3000/admin/dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
-        );
-        // Check if the response data is an array
-        if (Array.isArray(response.data)) {
-          setEntries(response.data);
-        } else {
-          // Convert the response data to an array
-          setEntries(Object.values(response.data));
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    if (searchTerm || timeframe) {
-      fetchSearchData();
-    }
+    fetchSearchData(searchTerm, timeframe, setEntries, apiIp);
   }, [searchTerm, timeframe]);
 
   return (

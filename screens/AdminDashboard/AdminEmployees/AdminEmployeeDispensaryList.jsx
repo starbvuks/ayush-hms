@@ -8,9 +8,13 @@ import {
   TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 
-const DashDispensaryListScreen = () => {
+import {
+  fetchData,
+  fetchSearchData,
+} from "../../../api/adminDashboard/adminEmployees/adminEmployeeDispensaryList";
+
+const AdminEmployeeDispensaryList = () => {
   const [dispensaries, setDispensaries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const navigation = useNavigation();
@@ -18,37 +22,11 @@ const DashDispensaryListScreen = () => {
   const apiIp = process.env.EXPO_PUBLIC_API_URL;
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `http://${apiIp}:3000/admin/dispensaries`
-      );
-      setDispensaries(response.data);
-    };
-
-    fetchData();
+    fetchData(setDispensaries, apiIp);
   }, []);
 
   useEffect(() => {
-    const fetchSearchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://${apiIp}:3000/admin/dispensaries/search?searchTerm=${searchTerm}`
-        );
-        // Check if the response data is an array
-        if (Array.isArray(response.data)) {
-          setDispensaries(response.data);
-        } else {
-          // Convert the response data to an array
-          setDispensaries(Object.values(response.data));
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    if (searchTerm) {
-      fetchSearchData();
-    }
+    fetchSearchData(searchTerm, setDispensaries, apiIp);
   }, [searchTerm]);
 
   return (
@@ -65,7 +43,7 @@ const DashDispensaryListScreen = () => {
           <TouchableOpacity
             style={styles.optionContainer}
             onPress={() =>
-              navigation.navigate("Admin Dispensary Entries", {
+              navigation.navigate("Admin Employees", {
                 dispensaryId: item.dispensary_id,
               })
             }
@@ -129,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DashDispensaryListScreen;
+export default AdminEmployeeDispensaryList;

@@ -4,22 +4,31 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 
+// Login Routes
 import LoginScreen from "../screens/Login/Login";
-import EntriesScreen from "../screens/Entries/Entries";
-import DispensariesScreen from "../screens/Dispensaries/Dispensaries";
 import AdminLogin from "../screens/Login/AdminLogin";
 
-import RegisteredDispensaryDetails from "../screens/Dispensaries/RegisteredDispensaryDetails";
-import PatientEntryScreen from "../screens/Entries/EnterPatientData";
+// Main Employee Nav Screens
+import MainEntriesScreen from "../screens/Entries/MainEntriesScreen";
+import MainDispensaryScreen from "../screens/Dispensaries/MainDispensaryScreen";
+
+// Patient Entries Related Screens
+import EnterPatientData from "../screens/Entries/EnterPatientData";
 import PatientEntries from "../screens/Entries/PatientEntries";
 
-import AdminDispensaryDashboard from "../screens/AdminDashboard/AdminDispensaries/DispensaryDashboard";
-import DashDispensaryListScreen from "../screens/AdminDashboard/AdminDispensaries/DashDispensaryList";
-import AdminDispensaryEntries from "../screens/AdminDashboard/AdminDispensaries/AdminDispensaryEntries";
+// Dispensary Related Screens
+import RegisteredDispensaryDetails from "../screens/Dispensaries/RegisteredDispensaryDetails";
 
-import AdminEmployeeDispensaryList from "../screens/AdminDashboard/Employees/AdminEmployeeDispensaryList";
-import AdminEmployees from "../screens/AdminDashboard/Employees/AdminEmployees";
-import AdminProfile from "../screens/AdminDashboard/Profile/AdminProfile";
+// Patient Entries on Admin Side
+import EntriesDispensaryListScreen from "../screens/AdminDashboard/AdminEntries/EntriesDispensaryListScreen";
+import AdminDispensaryEntries from "../screens/AdminDashboard/AdminEntries/AdminDispensaryEntries";
+
+// Attendance / Employees on Admin Side
+import AdminEmployeeDispensaryList from "../screens/AdminDashboard/AdminEmployees/AdminEmployeeDispensaryList";
+import AdminEmployees from "../screens/AdminDashboard/AdminEmployees/AdminEmployees";
+
+// Admin Profile Screens
+import AdminProfile from "../screens/AdminDashboard/AdminProfile/AdminProfile";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -38,7 +47,7 @@ function MainTabNavigator() {
       <Tab.Screen
         name="Entries"
         style={styles.tabItem}
-        component={EntriesScreen}
+        component={MainEntriesScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="doctor" color={color} size={size} />
@@ -49,7 +58,7 @@ function MainTabNavigator() {
       <Tab.Screen
         name="Dispensaries"
         style={styles.tabItem}
-        component={DispensariesScreen}
+        component={MainDispensaryScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
@@ -77,9 +86,9 @@ function AdminTabNavigator() {
       }}
     >
       <Tab.Screen
-        name="Admin Dash Dispensary List"
+        name="Admin Entries Dispensaries"
         style={styles.tabItem}
-        component={AdminEmployeeDispensaryList}
+        component={EntriesDispensaryListScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
@@ -94,7 +103,7 @@ function AdminTabNavigator() {
       <Tab.Screen
         name="Admin Employees Dispensaries"
         style={styles.tabItem}
-        component={DispensaryList} // replace with your actual Employees screen component
+        component={AdminEmployeeDispensaryList} // replace with your actual Employees screen component
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
@@ -142,7 +151,7 @@ function AppNavigator() {
       />
       <Stack.Screen
         name="Enter Patient Data"
-        component={PatientEntryScreen}
+        component={EnterPatientData}
         options={{ headerShown: false }}
       />
       <Stack.Screen

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { handleSignIn } from "../../api/Login/login";
+import { handleSignIn } from "../../api/login/login";
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");

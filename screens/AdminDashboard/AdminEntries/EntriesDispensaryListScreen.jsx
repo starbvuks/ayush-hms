@@ -10,7 +10,12 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
-const AdminEmployeeDispensaryList = () => {
+import {
+  fetchData,
+  fetchSearchData,
+} from "../../../api/adminDashboard/adminEntries/entriesDispensaryList";
+
+const EntriesDispensaryListScreen = () => {
   const [dispensaries, setDispensaries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const navigation = useNavigation();
@@ -18,37 +23,11 @@ const AdminEmployeeDispensaryList = () => {
   const apiIp = process.env.EXPO_PUBLIC_API_URL;
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `http://${apiIp}:3000/admin/dispensaries`
-      );
-      setDispensaries(response.data);
-    };
-
-    fetchData();
+    fetchData(setDispensaries, apiIp);
   }, []);
 
   useEffect(() => {
-    const fetchSearchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://${apiIp}:3000/admin/dispensaries/search?searchTerm=${searchTerm}`
-        );
-        // Check if the response data is an array
-        if (Array.isArray(response.data)) {
-          setDispensaries(response.data);
-        } else {
-          // Convert the response data to an array
-          setDispensaries(Object.values(response.data));
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    if (searchTerm) {
-      fetchSearchData();
-    }
+    fetchSearchData(searchTerm, setDispensaries, apiIp);
   }, [searchTerm]);
 
   return (
@@ -65,7 +44,7 @@ const AdminEmployeeDispensaryList = () => {
           <TouchableOpacity
             style={styles.optionContainer}
             onPress={() =>
-              navigation.navigate("Admin Employees", {
+              navigation.navigate("Admin Dispensary Entries", {
                 dispensaryId: item.dispensary_id,
               })
             }
@@ -129,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdminEmployeeDispensaryList;
+export default EntriesDispensaryListScreen;

@@ -8,17 +8,29 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 
-export default function EntriesScreen({ navigation }) {
+import { handleLogout } from "../../api/dispensaries/mainDispensaryScreen";
+
+export default function MainDispensaryScreen({ navigation }) {
   const options = [
-    { id: "1", icon: "calendar-check", label: "Enter Patient Data" },
-    { id: "2", icon: "tent", label: "Patient Entries" },
+    {
+      id: "1",
+      icon: "home-modern",
+      label: "Registered Dispensary Details",
+    },
+    { id: "2", icon: "logout", label: "Logout" },
   ];
+
+  // need to add about pagees
 
   const renderOption = ({ item }) => (
     <TouchableOpacity
       style={styles.optionContainer}
       onPress={() => {
-        navigation.navigate(item.label);
+        if (item.label === "Logout") {
+          handleLogout(navigation);
+        } else {
+          navigation.navigate(item.label);
+        }
       }}
     >
       <MaterialCommunityIcons name={item.icon} color="#2E475D" size={80} />
@@ -45,11 +57,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     paddingHorizontal: 20,
     paddingTop: 70,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
   },
   optionList: {
     justifyContent: "flex-start",

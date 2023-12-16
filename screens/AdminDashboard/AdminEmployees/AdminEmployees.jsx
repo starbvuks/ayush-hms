@@ -8,8 +8,8 @@ import {
   TextInput,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import axios from "axios";
-import moment from "moment";
+
+import { fetchData } from "../../../api/adminDashboard/adminEmployees/adminEmployees";
 
 const AdminEmployees = ({ route }) => {
   const { dispensaryId } = route.params;
@@ -26,23 +26,7 @@ const AdminEmployees = ({ route }) => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://${apiIp}:3000/admin/dispensary/${dispensaryId}/attendance`,
-          {
-            params: {
-              date: moment(date).format("YYYY-MM-DD"),
-            },
-          }
-        );
-        setAttendance(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+    fetchData(dispensaryId, date, setAttendance, apiIp);
   }, [dispensaryId, date]);
 
   return (

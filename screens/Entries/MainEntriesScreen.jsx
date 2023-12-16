@@ -6,46 +6,19 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 
-export default function DispensariesScreen({ navigation }) {
+export default function MainEntriesScreen({ navigation }) {
   const options = [
-    {
-      id: "1",
-      icon: "home-modern",
-      label: "Registered Dispensary Details",
-    },
-    { id: "2", icon: "logout", label: "Logout" },
+    { id: "1", icon: "calendar-check", label: "Enter Patient Data" },
+    { id: "2", icon: "tent", label: "Patient Entries" },
   ];
-
-  // need to ad my profile and about pagees
-
-  const handleLogout = async () => {
-    try {
-      // Remove the user's data from AsyncStorage
-      await AsyncStorage.multiRemove(["employee_id", "registered_dispensary"]);
-
-      // Navigate the user back to the login screen
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Login" }],
-      });
-    } catch (error) {
-      console.error("Error while logging out:", error);
-      alert("An error occurred while logging out");
-    }
-  };
 
   const renderOption = ({ item }) => (
     <TouchableOpacity
       style={styles.optionContainer}
       onPress={() => {
-        if (item.label === "Logout") {
-          handleLogout();
-        } else {
-          navigation.navigate(item.label);
-        }
+        navigation.navigate(item.label);
       }}
     >
       <MaterialCommunityIcons name={item.icon} color="#2E475D" size={80} />
@@ -72,6 +45,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     paddingHorizontal: 20,
     paddingTop: 70,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
   },
   optionList: {
     justifyContent: "flex-start",
