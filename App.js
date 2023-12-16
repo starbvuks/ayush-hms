@@ -30,7 +30,7 @@ export default function App() {
       <View style={styles.header}>
         <View style={styles.headerBlock1}>
           <Image
-            source={require("./assets/damodar-sir.jpeg")}
+            source={require("./assets/revanth-sir.jpg")}
             style={styles.pic}
             resizeMode="contain"
           />
@@ -40,12 +40,12 @@ export default function App() {
             resizeMode="contain"
           />
           <Image
-            source={require("./assets/revanth-sir.jpg")}
+            source={require("./assets/damodar-sir.jpeg")}
             style={styles.pic}
             resizeMode="contain"
           />
         </View>
-        <View>
+        <View style={styles.headerBlock2}>
           <Image
             source={require("./assets/logo.png")}
             style={styles.logo}
@@ -78,9 +78,12 @@ const styles = StyleSheet.create({
   headerBlock1: {
     flexDirection: "row",
   },
+  headerBlock2: {
+    flexDirection: "row",
+  },
   logo: {
-    width: 70,
-    height: 70,
+    width: 90,
+    height: 90,
     marginRight: 10,
   },
   pic: {

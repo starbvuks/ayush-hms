@@ -56,7 +56,7 @@ const AdminDispensaryEntries = () => {
       }
     };
 
-    if (searchTerm) {
+    if (searchTerm || timeframe) {
       fetchSearchData();
     }
   }, [searchTerm, timeframe]);

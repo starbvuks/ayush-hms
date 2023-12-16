@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
-const DispensaryListScreen = () => {
+const AdminEmployeeDispensaryList = () => {
   const [dispensaries, setDispensaries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const navigation = useNavigation();
@@ -129,4 +129,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DispensaryListScreen;
+export default AdminEmployeeDispensaryList;

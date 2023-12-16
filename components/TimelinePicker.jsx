@@ -64,7 +64,7 @@ const TimelinePicker = ({ onTimeframeChange }) => {
                   width: "98%",
                 }}
               >
-                <Text style={styles.modalSubheading}>Select Timeframe</Text>
+                <Text style={styles.modalSubheading}>Filter Time: (Today)</Text>
                 <TouchableOpacity
                   style={styles.closeButton}
                   onPress={() => setModalVisible(false)}

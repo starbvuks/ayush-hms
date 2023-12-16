@@ -17,7 +17,7 @@ import AdminDispensaryDashboard from "../screens/AdminDashboard/AdminDispensarie
 import DashDispensaryListScreen from "../screens/AdminDashboard/AdminDispensaries/DashDispensaryList";
 import AdminDispensaryEntries from "../screens/AdminDashboard/AdminDispensaries/AdminDispensaryEntries";
 
-import DispensaryList from "../screens/AdminDashboard/Employees/DispensaryList";
+import AdminEmployeeDispensaryList from "../screens/AdminDashboard/Employees/AdminEmployeeDispensaryList";
 import AdminEmployees from "../screens/AdminDashboard/Employees/AdminEmployees";
 import AdminProfile from "../screens/AdminDashboard/Profile/AdminProfile";
 
@@ -79,7 +79,7 @@ function AdminTabNavigator() {
       <Tab.Screen
         name="Admin Dash Dispensary List"
         style={styles.tabItem}
-        component={DashDispensaryListScreen}
+        component={AdminEmployeeDispensaryList}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
