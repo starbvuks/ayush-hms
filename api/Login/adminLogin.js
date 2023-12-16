@@ -1,4 +1,5 @@
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const handleAdminLogin = async (
   username,
@@ -36,6 +37,12 @@ export const handleAdminLogin = async (
         data.role === "zone_admin_1" ||
         data.role === "zone_admin_2"
       ) {
+        // Store the admin username and password in AsyncStorage
+        await AsyncStorage.multiSet([
+          ["adminUsername", username],
+          ["adminPassword", password],
+        ]);
+
         navigation.navigate("Admin");
       } else {
         alert("You do not have admin privileges");

@@ -7,7 +7,8 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import { fetchData, fetchSearchData } from "../../api/entries/patientEntries";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PatientEntries = () => {
   const [entries, setEntries] = useState([]);
@@ -18,12 +19,52 @@ const PatientEntries = () => {
   const apiIp = process.env.EXPO_PUBLIC_API_URL;
 
   useEffect(() => {
-    fetchData(page, pageSize, setEntries, apiIp);
+    const fetchData = async () => {
+      const registered_dispensary = await AsyncStorage.getItem(
+        "registered_dispensary"
+      );
+
+      if (registered_dispensary) {
+        try {
+          const response = await axios.get(
+            `http://${apiIp}:3000/patient-entries?dispensary_id=${registered_dispensary}&page=${page}&pageSize=${pageSize}`
+          );
+          // Check if the server returned any new data
+          if (response.data.patientEntries.length > 0) {
+            setEntries((prevEntries) => [
+              ...prevEntries,
+              ...response.data.patientEntries,
+            ]);
+          }
+        } catch (error) {
+          console.error("Error fetching patient entries:", error);
+        }
+      }
+    };
+
+    fetchData();
   }, [page, pageSize]);
 
   useEffect(() => {
-    fetchSearchData(searchTerm, setEntries, apiIp);
+    const fetchSearchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://${apiIp}:3000/patient-entries/search?searchTerm=${searchTerm}`
+        );
+        setEntries(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    if (searchTerm) {
+      fetchSearchData();
+    }
   }, [searchTerm]);
+
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   return (
     <View style={styles.container}>

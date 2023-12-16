@@ -103,7 +103,7 @@ export default function EnterPatientData() {
   };
 
   const onSubmit = async () => {
-    await handleSubmit(
+    await handlePatientSubmit(
       patientData,
       employeeId,
       registeredDispensary,

@@ -1,18 +1,18 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import AppLoading from "expo-app-loading";
-
-import AppNavigator from "./navigation/AppNavigator";
-
+import * as SplashScreen from "expo-splash-screen";
 import {
   useFonts,
   DMSans_400Regular,
   DMSans_700Bold,
 } from "@expo-google-fonts/dm-sans";
 
+import AppNavigator from "./navigation/AppNavigator";
+
 export default function App() {
+  const [appIsReady, setAppIsReady] = useState(false);
   const [fontsLoaded] = useFonts({
     "DM-Sans-Regular": DMSans_400Regular,
     "DM-Sans-Bold": DMSans_700Bold,
@@ -21,12 +21,32 @@ export default function App() {
   // windows api ip: 192.168.29.226
   // 506 ip: 192.168.0.111
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady || !fontsLoaded) {
+    return null;
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <View style={styles.header}>
         <View style={styles.headerBlock1}>
           <Image

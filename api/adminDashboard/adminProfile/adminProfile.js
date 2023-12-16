@@ -2,8 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const handleLogout = async (navigation) => {
   try {
-    // Remove the user's data from AsyncStorage
-    await AsyncStorage.multiRemove(["employee_id", "registered_dispensary"]);
+    // Remove the admin username and password from AsyncStorage
+    await AsyncStorage.multiRemove(["adminUsername", "adminPassword"]);
 
     // Navigate the user back to the login screen
     navigation.reset({
