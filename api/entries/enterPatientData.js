@@ -32,7 +32,8 @@ export const handlePatientSubmit = async (
 
   try {
     const response = await axios.post(
-      `http://${apiIp}:3000/patient-entry`,
+      `https://${apiIp}:3000/patient-entry`,
+      // `https://192.168.29.226:3000/patient-entry`,
       formData,
       {
         headers: {

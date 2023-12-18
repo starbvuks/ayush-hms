@@ -27,7 +27,8 @@ const PatientEntries = () => {
       if (registered_dispensary) {
         try {
           const response = await axios.get(
-            `http://${apiIp}:3000/patient-entries?dispensary_id=${registered_dispensary}&page=${page}&pageSize=${pageSize}`
+            `https://${apiIp}/patient-entries?dispensary_id=${registered_dispensary}&page=${page}&pageSize=${pageSize}`
+            // `https://192.168.29.226:3000/patient-entries?dispensary_id=${registered_dispensary}&page=${page}&pageSize=${pageSize}`
           );
           // Check if the server returned any new data
           if (response.data.patientEntries.length > 0) {
@@ -49,7 +50,8 @@ const PatientEntries = () => {
     const fetchSearchData = async () => {
       try {
         const response = await axios.get(
-          `http://${apiIp}:3000/patient-entries/search?searchTerm=${searchTerm}`
+          `https://${apiIp}/patient-entries/search?searchTerm=${searchTerm}`
+          // `http://192.168.29.226:3000/patient-entries/search?searchTerm=${searchTerm}`
         );
         setEntries(response.data);
       } catch (error) {

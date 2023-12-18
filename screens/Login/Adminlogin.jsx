@@ -43,7 +43,10 @@ export default function AdminLogin({ navigation }) {
             onChangeText={setPassword}
           />
         </View>
-        <TouchableOpacity style={styles.signInButton} onPress={onAdminLogin}>
+        <TouchableOpacity
+          style={styles.signInButton}
+          onPress={handleAdminLogin2}
+        >
           <Text style={styles.buttonText}>SIGN IN</Text>
         </TouchableOpacity>
         <Text style={styles.footerText}>

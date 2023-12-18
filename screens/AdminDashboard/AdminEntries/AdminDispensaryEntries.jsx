@@ -27,7 +27,8 @@ const AdminDispensaryEntries = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://${apiIp}:3000/dispensaries/${dispensaryId}/patient-entries/${timeframe}?page=${currentPage}&pageSize=7`
+          `https://${apiIp}/dispensaries/${dispensaryId}/patient-entries/${timeframe}?page=${currentPage}&pageSize=7`
+          // `https://192.168.29.226:3000/dispensaries/${dispensaryId}/patient-entries/${timeframe}?page=${currentPage}&pageSize=7`
         );
         setEntries((prevEntries) => [...prevEntries, ...response.data]);
       } catch (error) {
@@ -42,7 +43,8 @@ const AdminDispensaryEntries = () => {
     const fetchSearchData = async () => {
       try {
         const response = await axios.get(
-          `http://${apiIp}:3000/admin/dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
+          `https://${apiIp}/admin/dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
+          // `https://192.168.29.226:3000/admin/dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
         );
         // Check if the response data is an array
         if (Array.isArray(response.data)) {

@@ -4,7 +4,8 @@ export const fetchDispensaryName = async (setDispensaryName, apiIp) => {
   const registeredDispensary = await AsyncStorage.getItem(
     "registered_dispensary"
   );
-  const apiEndpoint = `http://${apiIp}:3000/my-dispensary/${registeredDispensary}`;
+  const apiEndpoint = `https://${apiIp}:3000/my-dispensary/${registeredDispensary}`;
+  // const apiEndpoint = `https://192.168.29.226:3000/my-dispensary/${registeredDispensary}`;
 
   fetch(apiEndpoint)
     .then((response) => response.json())

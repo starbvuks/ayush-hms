@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -17,20 +18,27 @@ import {
 const AdminEmployeeDispensaryList = () => {
   const [dispensaries, setDispensaries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(1);
   const navigation = useNavigation();
 
   const apiIp = process.env.EXPO_PUBLIC_API_URL;
 
   useEffect(() => {
-    fetchData(setDispensaries, apiIp);
-  }, []);
+    fetchData(setDispensaries, page, apiIp);
+  }, [page]);
 
   useEffect(() => {
-    fetchSearchData(searchTerm, setDispensaries, apiIp);
+    if (searchTerm) {
+      fetchSearchData(searchTerm, setDispensaries, apiIp);
+    }
   }, [searchTerm]);
 
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <TextInput
         style={styles.searchBar}
         onChangeText={setSearchTerm}
@@ -53,7 +61,10 @@ const AdminEmployeeDispensaryList = () => {
         )}
         keyExtractor={(item) => item.dispensary_id.toString()}
         numColumns={2}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.5}
       />
+      <Button title="Load More" onPress={handleLoadMore} />
     </View>
   );
 };

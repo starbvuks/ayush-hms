@@ -9,9 +9,7 @@ export default function AdminDispensaryDashboard({ navigation }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        `http://192.168.0.111:3000/admin/dashboard`
-      );
+      const response = await axios.get(`https://${apiIp}/admin/dashboard`);
       console.log(response.data);
       setDashboardData(response.data);
     };
@@ -89,7 +87,9 @@ export default function AdminDispensaryDashboard({ navigation }) {
           {(dashboardData?.totalEntries || [])
             .slice(0, 5)
             .map((entry, index) => (
-              <Text style={styles.totalEntries} key={index}>{formatDispensaryData(entry)}</Text>
+              <Text style={styles.totalEntries} key={index}>
+                {formatDispensaryData(entry)}
+              </Text>
             ))}
         </ScrollView>
       </View>
@@ -132,6 +132,6 @@ const styles = StyleSheet.create({
     color: "black",
   },
   totalEntries: {
-    marginRight: 20
-  }
- });
+    marginRight: 20,
+  },
+});

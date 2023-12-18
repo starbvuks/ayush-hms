@@ -22,6 +22,7 @@
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
       },
+      "usesCleartextTraffic": true,
       "package": "com.sarvagk.AyushHMS"
     },
     "web": {
@@ -32,6 +33,16 @@
         "projectId": "73eb054f-c69f-4a21-8142-d0659c8e173b"
       }
     },
-    "owner": "sarvag"
+    "owner": "sarvag",
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ]
   }
 }
