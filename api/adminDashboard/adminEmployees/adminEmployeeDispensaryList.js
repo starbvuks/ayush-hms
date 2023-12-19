@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const fetchData = async (setDispensaries, page, apiIp) => {
   try {
+    // `https://${apiIp}/admin/dispensaries?page=${page}&pageSize=7`
     const response = await axios.get(
       `http://192.168.29.226:3000/admin/dispensaries?page=${page}&pageSize=7`
     );

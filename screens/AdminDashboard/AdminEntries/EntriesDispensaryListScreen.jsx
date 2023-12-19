@@ -25,7 +25,6 @@ const EntriesDispensaryListScreen = () => {
 
   useEffect(() => {
     fetchData(setDispensaries, page, apiIp);
-    console.log(dispensaries); // Add this line
   }, [page]);
 
   useEffect(() => {

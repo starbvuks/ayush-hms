@@ -9,7 +9,7 @@ export const fetchData = async (page, pageSize, setEntries, apiIp) => {
   if (registered_dispensary) {
     try {
       const response = await axios.get(
-        `https://${apiIp}:3000/patient-entries?dispensary_id=${registered_dispensary}&page=${page}&pageSize=${pageSize}`
+        `https://${apiIp}/patient-entries?dispensary_id=${registered_dispensary}&page=${page}&pageSize=${pageSize}`
         // `https://192.168.29.226:3000/patient-entries?dispensary_id=${registered_dispensary}&page=${page}&pageSize=${pageSize}`
       );
       // Check if the server returned any new data

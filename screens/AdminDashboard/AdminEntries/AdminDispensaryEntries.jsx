@@ -7,7 +7,6 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 
@@ -26,9 +25,9 @@ const AdminDispensaryEntries = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // `https://${apiIp}/dispensaries/${dispensaryId}/patient-entries/${timeframe}?page=${currentPage}&pageSize=7`
         const response = await axios.get(
-          `https://${apiIp}/dispensaries/${dispensaryId}/patient-entries/${timeframe}?page=${currentPage}&pageSize=7`
-          // `https://192.168.29.226:3000/dispensaries/${dispensaryId}/patient-entries/${timeframe}?page=${currentPage}&pageSize=7`
+          `http://192.168.29.226:3000/dispensaries/${dispensaryId}/patient-entries/${timeframe}?page=${currentPage}&pageSize=7`
         );
         setEntries((prevEntries) => [...prevEntries, ...response.data]);
       } catch (error) {
@@ -42,9 +41,9 @@ const AdminDispensaryEntries = () => {
   useEffect(() => {
     const fetchSearchData = async () => {
       try {
+        // `https://${apiIp}/admin/dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
         const response = await axios.get(
-          `https://${apiIp}/admin/dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
-          // `https://192.168.29.226:3000/admin/dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
+          `http://192.168.29.226:3000/admin/dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
         );
         // Check if the response data is an array
         if (Array.isArray(response.data)) {
@@ -58,7 +57,7 @@ const AdminDispensaryEntries = () => {
       }
     };
 
-    if (searchTerm || timeframe) {
+    if (searchTerm && timeframe) {
       fetchSearchData();
     }
   }, [searchTerm, timeframe]);

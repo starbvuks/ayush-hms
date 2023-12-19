@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Alert } from "react-native";
 
 export const handlePatientSubmit = async (
   patientData,
@@ -32,7 +33,7 @@ export const handlePatientSubmit = async (
 
   try {
     const response = await axios.post(
-      `https://${apiIp}:3000/patient-entry`,
+      `https://${apiIp}/patient-entry`,
       // `https://192.168.29.226:3000/patient-entry`,
       formData,
       {

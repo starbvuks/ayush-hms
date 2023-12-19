@@ -34,18 +34,18 @@ export default function AdminProfile({ navigation }) {
       label: "Logout",
       onPress: handleLogout,
     },
-    {
-      id: "2",
-      icon: "account-circle",
-      label: "View Employee",
-      onPress: () => navigation.navigate("ViewEmployee"),
-    },
-    {
-      id: "3",
-      icon: "account-plus",
-      label: "Add Employee",
-      onPress: () => navigation.navigate("AddEmployee"),
-    },
+    // {
+    //   id: "2",
+    //   icon: "account-circle",
+    //   label: "View Employee",
+    //   onPress: () => navigation.navigate("ViewEmployee"),
+    // },
+    // {
+    //   id: "3",
+    //   icon: "account-plus",
+    //   label: "Add Employee",
+    //   onPress: () => navigation.navigate("AddEmployee"),
+    // },
   ];
 
   const renderOption = ({ item }) => (
