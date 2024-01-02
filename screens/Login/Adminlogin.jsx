@@ -14,7 +14,6 @@ export default function AdminLogin({ navigation }) {
   const [userRole, setUserRole] = useState(null);
 
   const apiIp = process.env.EXPO_PUBLIC_API_URL;
-  console.log(apiIp);
 
   const onAdminLogin = async () => {
     await handleAdminLogin(username, password, apiIp, navigation);

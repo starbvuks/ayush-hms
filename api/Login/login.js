@@ -10,7 +10,7 @@ export const handleSignIn = async (username, password, apiIp, navigation) => {
   try {
     console.log("Sending login request...");
     // const response = await axios.post(`http://${apiIp}:3000/login`, {
-    const response = await axios.post(`https://${apiIp}/login`, {
+    const response = await axios.post(`${apiIp}/login`, {
       username: username,
       password: password,
     });

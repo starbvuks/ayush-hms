@@ -41,7 +41,7 @@ export default function AdminProfile({ navigation }) {
     //   onPress: () => navigation.navigate("ViewEmployee"),
     // },
     // {
-    //   id: "3",
+    //   id: "2",
     //   icon: "account-plus",
     //   label: "Add Employee",
     //   onPress: () => navigation.navigate("AddEmployee"),

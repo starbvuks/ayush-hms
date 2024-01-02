@@ -123,7 +123,6 @@ const styles = StyleSheet.create({
   },
   listItemText: {
     fontSize: 18,
-    fontFamily: "NunitoSans_400Regular",
   },
 });
 

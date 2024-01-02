@@ -2,9 +2,9 @@ import axios from "axios";
 
 export const fetchData = async (setDispensaries, page, apiIp) => {
   try {
-    // `https://${apiIp}/admin/dispensaries?page=${page}&pageSize=7`
     const response = await axios.get(
-      `http://192.168.29.226:3000/admin/dispensaries?page=${page}&pageSize=7`
+      // `http://192.168.29.226:3000/admin/dispensaries?page=${page}&pageSize=7`
+      `${apiIp}/admin/dispensaries?page=${page}&pageSize=7`
     );
     if (response.data.length > 0) {
       setDispensaries((prevDispensaries) => [
@@ -20,8 +20,8 @@ export const fetchData = async (setDispensaries, page, apiIp) => {
 export const fetchSearchData = async (searchTerm, setDispensaries, apiIp) => {
   try {
     const response = await axios.get(
-      // `http://${apiIp}:3000/admin/dispensaries/search?searchTerm=${searchTerm}`
-      `http://192.168.29.226:3000/admin/dispensaries/search?searchTerm=${searchTerm}`
+      `${apiIp}/admin/dispensaries/search?searchTerm=${searchTerm}`
+      // `http://192.168.29.226:3000/admin/dispensaries/search?searchTerm=${searchTerm}`
     );
     // Check if the response data is an array
     if (Array.isArray(response.data)) {

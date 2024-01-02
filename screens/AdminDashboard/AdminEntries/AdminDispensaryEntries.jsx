@@ -43,11 +43,12 @@ const AdminDispensaryEntries = () => {
       try {
         // `https://${apiIp}/admin/dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
         const response = await axios.get(
-          `http://192.168.29.226:3000/admin/dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
+          `${apiIp}/admin/dispensaries-entry/${dispensaryId}/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
         );
         // Check if the response data is an array
         if (Array.isArray(response.data)) {
           setEntries(response.data);
+          console.log(entries);
         } else {
           // Convert the response data to an array
           setEntries(Object.values(response.data));
@@ -221,5 +222,3 @@ const styles = StyleSheet.create({
 });
 
 export default AdminDispensaryEntries;
-
-AdminDispensaryEntries;

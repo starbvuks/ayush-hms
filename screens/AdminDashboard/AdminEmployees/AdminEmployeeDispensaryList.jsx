@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import {
   fetchData,
   fetchSearchData,
-} from "../../../api/adminDashboard/adminEmployees/adminEmployeeDispensaryList";
+} from "../../../api/adminDashboard/adminEntries/adminEntriesDispensaryList";
 
 const AdminEmployeeDispensaryList = () => {
   const [dispensaries, setDispensaries] = useState([]);

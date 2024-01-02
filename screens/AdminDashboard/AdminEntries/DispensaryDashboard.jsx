@@ -9,7 +9,7 @@ export default function AdminDispensaryDashboard({ navigation }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`https://${apiIp}/admin/dashboard`);
+      const response = await axios.get(`${apiIp}/admin/dashboard`);
       console.log(response.data);
       setDashboardData(response.data);
     };
