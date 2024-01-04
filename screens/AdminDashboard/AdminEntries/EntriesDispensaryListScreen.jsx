@@ -64,7 +64,35 @@ const EntriesDispensaryListScreen = () => {
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
       />
-      <Button title="Load More" onPress={handleLoadMore} />
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <TouchableOpacity
+          style={styles.loadMoreButton}
+          onPress={handleLoadMore}
+        >
+          <Text style={styles.loadMoreButtonText}>Load More</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.loadMoreButton}
+          onPress={handleLoadMore}
+        >
+          <Text
+            style={styles.loadMoreButtonText}
+            onPress={() =>
+              navigation.navigate("Admin Dispensary Entries", {
+                dispensaryId: "*",
+              })
+            }
+          >
+            Search From All Dispensaries
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -115,6 +143,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 10,
     marginBottom: 10,
+  },
+  loadMoreButton: {
+    backgroundColor: "#ECF0F9",
+    padding: 12,
+    width: "45%",
+    margin: 6,
+    borderRadius: 5,
+    borderWidth: 2,
+  },
+  loadMoreButtonText: {
+    color: "#2E475D",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
 

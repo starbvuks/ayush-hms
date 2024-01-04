@@ -54,13 +54,6 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.linkText}>Login Here</Text>
           </TouchableOpacity>
         </Text>
-        {/* <Text style={styles.footerText2}>
-          Need to make a new account?{" "}
-          <TouchableOpacity onPress={handleAdminRoute}>
-            <Text style={styles.linkText}>Register Here</Text>
-          </TouchableOpacity>
-        </Text> */}
-        {/* </ImageBackground> */}
       </View>
     </View>
   );
@@ -122,7 +115,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   footerText: {
-    fontFamily: "DMSans_400Regular",
+    fontFamily: "DM-Sans-Regular",
     fontSize: 18,
     textAlign: "center",
 

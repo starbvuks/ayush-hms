@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-} from "react-native";
+import { View, Text, FlatList, StyleSheet, TextInput } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 
@@ -25,9 +18,8 @@ const AdminDispensaryEntries = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // `https://${apiIp}/dispensaries/${dispensaryId}/patient-entries/${timeframe}?page=${currentPage}&pageSize=7`
         const response = await axios.get(
-          `http://192.168.29.226:3000/dispensaries/${dispensaryId}/patient-entries/${timeframe}?page=${currentPage}&pageSize=7`
+          `${apiIp}/dispensaries/${dispensaryId}/patient-entries/${timeframe}?page=${currentPage}&pageSize=7`
         );
         setEntries((prevEntries) => [...prevEntries, ...response.data]);
       } catch (error) {
@@ -41,14 +33,15 @@ const AdminDispensaryEntries = () => {
   useEffect(() => {
     const fetchSearchData = async () => {
       try {
-        // `https://${apiIp}/admin/dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
-        const response = await axios.get(
-          `${apiIp}/admin/dispensaries-entry/${dispensaryId}/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
-        );
+        let url =
+          dispensaryId === "*"
+            ? `${apiIp}/admin/all-dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
+            : `${apiIp}/admin/dispensaries-entry/${dispensaryId}/search?searchTerm=${searchTerm}&timeframe=${timeframe}`;
+
+        const response = await axios.get(url);
         // Check if the response data is an array
         if (Array.isArray(response.data)) {
           setEntries(response.data);
-          console.log(entries);
         } else {
           // Convert the response data to an array
           setEntries(Object.values(response.data));
@@ -118,7 +111,7 @@ const AdminDispensaryEntries = () => {
             </View>
           );
         }}
-        keyExtractor={(item) => item.entry_id.toString()}
+        keyExtractor={(item, index) => index.toString()}
         numColumns={1}
         onEndReached={() => setCurrentPage((prevPage) => prevPage + 1)}
         onEndReachedThreshold={0.5}

@@ -6,11 +6,13 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { MaterialCommunityIcons } from "react-native-vector-icons";
 import { handleAdminLogin } from "../../api/login/adminLogin";
 
 export default function AdminLogin({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [userRole, setUserRole] = useState(null);
 
   const apiIp = process.env.EXPO_PUBLIC_API_URL;
@@ -37,12 +39,38 @@ export default function AdminLogin({ navigation }) {
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Password</Text>
-          <TextInput
-            style={styles.input}
-            secureTextEntry={true}
-            onChangeText={setPassword}
-          />
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.input}
+              secureTextEntry={!showPassword}
+              onChangeText={setPassword}
+            />
+            <TouchableOpacity
+              style={[
+                styles.showPass,
+                { position: "absolute", right: 6, bottom: 3 },
+              ]}
+              onPress={() => setShowPassword(!showPassword)}
+            >
+              <Text style={styles.showPassText}>
+                {showPassword ? (
+                  <MaterialCommunityIcons
+                    name="eye-off-outline"
+                    color="#white"
+                    size={30}
+                  />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="eye-outline"
+                    color="white"
+                    size={30}
+                  />
+                )}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
+
         <TouchableOpacity
           style={styles.signInButton}
           onPress={handleAdminLogin2}
@@ -103,8 +131,17 @@ const styles = StyleSheet.create({
     fontFamily: "DM-Sans-Regular",
     fontSize: 20,
   },
+  showPass: {
+    backgroundColor: "#2E475D",
+    borderRadius: 4,
+  },
+  showPassText: {
+    color: "white",
+    fontFamily: "DM-Sans-Regular",
+    padding: 5,
+  },
   signInButton: {
-    backgroundColor: "#4A90E2",
+    backgroundColor: "#2E475D",
     padding: 20,
     borderRadius: 7,
     alignItems: "center",
@@ -116,7 +153,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   footerText: {
-    fontFamily: "DMSans_400Regular",
+    fontFamily: "DM-Sans-Regular",
     fontSize: 18,
     textAlign: "center",
   },
