@@ -28,7 +28,7 @@ const AdminDispensaryEntries = () => {
     };
 
     fetchData();
-  }, [dispensaryId, timeframe, currentPage]);
+  }, [dispensaryId, timeframe]);
 
   useEffect(() => {
     const fetchSearchData = async () => {
@@ -37,6 +37,9 @@ const AdminDispensaryEntries = () => {
           dispensaryId === "*"
             ? `${apiIp}/admin/all-dispensaries-entry/search?searchTerm=${searchTerm}&timeframe=${timeframe}`
             : `${apiIp}/admin/dispensaries-entry/${dispensaryId}/search?searchTerm=${searchTerm}&timeframe=${timeframe}`;
+
+        // Clear the entries state
+        setEntries([]);
 
         const response = await axios.get(url);
         // Check if the response data is an array
