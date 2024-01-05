@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, StyleSheet, TextInput } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 
 import TimelinePicker from "../../../components/TimelinePicker";
@@ -10,6 +10,7 @@ const AdminDispensaryEntries = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [timeframe, setTimeframe] = useState("today");
   const [currentPage, setCurrentPage] = useState(1);
+  const [matchingEntries, setMatchingEntries] = useState(1);
 
   const route = useRoute();
   const dispensaryId = route.params.dispensaryId;
@@ -44,10 +45,12 @@ const AdminDispensaryEntries = () => {
         const response = await axios.get(url);
         // Check if the response data is an array
         if (Array.isArray(response.data)) {
-          setEntries(response.data);
+          setEntries(response.data.entries);
+          setMatchingEntries(response.data.totalEntries);
         } else {
           // Convert the response data to an array
-          setEntries(Object.values(response.data));
+          setEntries(Object.values(response.data.entries));
+          setMatchingEntries(Object.values(response.data.totalEntries));
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -67,7 +70,18 @@ const AdminDispensaryEntries = () => {
         value={searchTerm}
         placeholder="Search by name, diagnosis"
       />
-      <TimelinePicker onTimeframeChange={setTimeframe} />
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <TimelinePicker onTimeframeChange={setTimeframe} />
+        <Text style={styles.matchingEntriesText}>
+          Matching Entries: &nbsp; {matchingEntries}
+        </Text>
+      </View>
       <FlatList
         data={entries}
         renderItem={({ item }) => {
@@ -137,6 +151,16 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 6,
     fontSize: 18,
+  },
+  matchingEntriesText: {
+    flexDirection: "row",
+    textAlign: "center",
+    borderRadius: 4,
+    padding: 10,
+    backgroundColor: "#d6d5ed",
+    marginRight: 20,
+    fontSize: 20,
+    fontFamily: "DM-Sans-Regular",
   },
   firstLine: {
     display: "flex",

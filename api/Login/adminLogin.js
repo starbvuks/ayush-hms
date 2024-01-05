@@ -16,18 +16,15 @@ export const handleAdminLogin = async (
 
   try {
     console.log("Sending login request...");
-    // const response = await axios.post(
-    //   `http://192.168.29.226:3000/admin/login`,
-    //   {
     const response = await axios.post(`${apiIp}/admin/login`, {
       username: username,
       password: password,
     });
 
-    console.log("Response:", response);
+    // console.log("Response:", response);
 
     const data = response.data;
-    console.log("Data:", data);
+    // console.log("Data:", data);
 
     if (response.status === 401) {
       alert(data.message);

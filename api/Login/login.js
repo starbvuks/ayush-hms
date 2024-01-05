@@ -9,16 +9,15 @@ export const handleSignIn = async (username, password, apiIp, navigation) => {
 
   try {
     console.log("Sending login request...");
-    // const response = await axios.post(`http://${apiIp}:3000/login`, {
     const response = await axios.post(`${apiIp}/login`, {
       username: username,
       password: password,
     });
 
-    console.log("Response:", response);
+    // console.log("Response:", response);
 
     const data = response.data;
-    console.log("Data:", data);
+    // console.log("Data:", data);
 
     if (data.error) {
       alert(data.error);
@@ -32,13 +31,13 @@ export const handleSignIn = async (username, password, apiIp, navigation) => {
           ["registered_dispensary", data.registered_dispensary.toString()],
         ]);
 
-        const employee_id = await AsyncStorage.getItem("employee_id");
-        const registered_dispensary = await AsyncStorage.getItem(
-          "registered_dispensary"
-        );
+        // const employee_id = await AsyncStorage.getItem("employee_id");
+        // const registered_dispensary = await AsyncStorage.getItem(
+        //   "registered_dispensary"
+        // );
 
-        console.log("Employee ID:", employee_id);
-        console.log("Registered Dispensary:", registered_dispensary);
+        // console.log("Employee ID:", employee_id);
+        // console.log("Registered Dispensary:", registered_dispensary);
 
         navigation.reset({
           index: 0,

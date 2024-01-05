@@ -4,14 +4,19 @@ import { fetchDispensaryName } from "../../api/dispensaries/registeredDispensary
 
 export default function RegisteredDispensaryDetails() {
   const [dispensaryName, setDispensaryName] = useState("");
+  const [username, setUsername] = useState("");
   const apiIp = process.env.EXPO_PUBLIC_API_URL;
 
   useEffect(() => {
-    fetchDispensaryName(setDispensaryName, apiIp);
+    fetchDispensaryName(setDispensaryName, setUsername, apiIp);
   }, []);
 
   return (
     <View style={styles.container}>
+      <View style={styles.box}>
+        <Text style={styles.normalText}>Your Employee ID:</Text>
+        <Text style={styles.dispensaryName}>{username}</Text>
+      </View>
       <View style={styles.box}>
         <Text style={styles.normalText}>You are currently registered to:</Text>
         <Text style={styles.dispensaryName}>{dispensaryName}</Text>

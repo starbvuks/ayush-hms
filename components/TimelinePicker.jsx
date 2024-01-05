@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 4,
     padding: 10,
-    width: "40%",
     left: 20,
     backgroundColor: "#d6d5ed",
   },
