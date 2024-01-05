@@ -3,13 +3,12 @@ import axios from "axios";
 export const fetchData = async (setDispensaries, page, apiIp) => {
   try {
     const response = await axios.get(
-      // `http://192.168.29.226:3000/admin/dispensaries?page=${page}&pageSize=7`
       `${apiIp}/admin/dispensaries?page=${page}&pageSize=7`
     );
     if (response.data.length > 0) {
       setDispensaries((prevDispensaries) => [
-        ...response.data,
         ...prevDispensaries,
+        ...response.data,
       ]);
     }
   } catch (error) {
@@ -21,7 +20,6 @@ export const fetchSearchData = async (searchTerm, setDispensaries, apiIp) => {
   try {
     const response = await axios.get(
       `${apiIp}/admin/dispensaries/search?searchTerm=${searchTerm}`
-      // `http://192.168.29.226:3000/admin/dispensaries/search?searchTerm=${searchTerm}`
     );
     // Check if the response data is an array
     if (Array.isArray(response.data)) {

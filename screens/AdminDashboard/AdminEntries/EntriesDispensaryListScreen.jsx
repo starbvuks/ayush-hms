@@ -61,7 +61,6 @@ const EntriesDispensaryListScreen = () => {
         )}
         keyExtractor={(item) => item.dispensary_id.toString()}
         numColumns={2}
-        onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
       />
       <View
