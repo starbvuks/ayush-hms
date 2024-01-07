@@ -20,6 +20,7 @@ export default function App() {
 
   // windows api ip: 192.168.29.226
   // 506 ip: 192.168.0.111
+  // phone ip: 192.168.48.128
 
   useEffect(() => {
     async function prepare() {

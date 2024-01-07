@@ -125,6 +125,14 @@ const AdminDispensaryEntries = () => {
                   <Text style={styles.otherInfo}>{item.other_info}</Text>
                 </View>
               </View>
+              <View style={styles.diagnosis}>
+                <Text style={styles.itemText}>Contact:</Text>
+                <View style={styles.diagnosisTextBox}>
+                  <Text style={styles.diagnosisText}>
+                    +91 {item.phone_number}
+                  </Text>
+                </View>
+              </View>
             </View>
           );
         }}

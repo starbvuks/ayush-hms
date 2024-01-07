@@ -71,10 +71,7 @@ export default function AdminLogin({ navigation }) {
           </View>
         </View>
 
-        <TouchableOpacity
-          style={styles.signInButton}
-          onPress={handleAdminLogin2}
-        >
+        <TouchableOpacity style={styles.signInButton} onPress={onAdminLogin}>
           <Text style={styles.buttonText}>SIGN IN</Text>
         </TouchableOpacity>
         <Text style={styles.footerText}>

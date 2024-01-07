@@ -43,7 +43,10 @@ export const handleAdminLogin = async (
           ["adminPassword", password],
         ]);
 
-        navigation.navigate("Admin");
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Admin" }],
+        });
       } else {
         alert("You do not have admin privileges");
       }
